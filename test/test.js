@@ -1,9 +1,9 @@
 'use strict';
 
 var assert = require('chai').assert;
-var i18nExtract = require('./index.js');
 var fs = require('fs');
 var gettextParser = require('gettext-parser');
+var i18nExtract = require('../index.js');
 
 describe('i18nExtract', function() {
   describe('#extractFromContent()', function() {

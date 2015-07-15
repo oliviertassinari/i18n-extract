@@ -4,7 +4,7 @@
   "description": "Extract messages from js and jsx to po",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test.js"
+    "test": "cd test && mocha test.js"
   },
   "repository": {
     "type": "git",
