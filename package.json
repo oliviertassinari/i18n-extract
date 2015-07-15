@@ -1,6 +1,6 @@
 {
   "name": "i18n-extract",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Extract messages from js and jsx to po",
   "main": "index.js",
   "scripts": {
@@ -24,6 +24,7 @@
   "license": "MIT",
   "dependencies": {
     "esprima-fb": "^15001.1.0-dev-harmony-fb",
+    "gettext-parser": "^1.1.1",
     "glob": "^5.0.14",
     "traverse": "^0.6.6"
   },
