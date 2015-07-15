@@ -31,6 +31,21 @@ describe('i18nExtract', function() {
         'Following',
       ], messages);
     });
+
+    it('should return 6 messages when scanning *.jsx and hello.js', function() {
+      var messages = i18nExtract.extractFromFiles([
+        '*.jsx',
+        'hello.js',
+      ]);
+      assert.sameMembers([
+        'Follow',
+        'Followed!',
+        'Unfollowed!',
+        'Unfollow',
+        'Following',
+        'hello',
+      ], messages);
+    });
   });
 
   describe('#mergeMessagesWithPO()', function() {

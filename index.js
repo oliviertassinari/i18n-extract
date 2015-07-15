@@ -46,11 +46,23 @@ function extractFromContent(content) {
   return messages;
 }
 
-function extractFromFiles(files) {
+function extractFromFiles(filenames) {
   var messages = [];
 
-  files = glob.sync(files, {});
-  files.forEach(function(filename) {
+  // filenames should be an array
+  if (typeof filenames === 'string') {
+    filenames = [
+      filenames,
+    ];
+  }
+
+  var filenamesToScan = [];
+
+  filenames.forEach(function(filename) {
+    filenamesToScan = filenamesToScan.concat(glob.sync(filename, {}));
+  });
+
+  filenamesToScan.forEach(function(filename) {
     var content = fs.readFileSync(filename);
     messages = messages.concat(extractFromContent(content));
   });
