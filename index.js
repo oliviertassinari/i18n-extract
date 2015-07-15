@@ -95,7 +95,6 @@ module.exports.mergeMessagesWithPO = function(messages, poFileName, outputFileNa
     }
   });
 
-
   po.translations[''] = translations;
 
   return fs.writeFileSync(outputFileName, gettextParser.po.compile(po));

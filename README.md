@@ -1,4 +1,4 @@
-# i18n Extract [![Build Status](https://travis-ci.org/oliviertassinari/i18n-extract.svg)](https://travis-ci.org/oliviertassinari/i18n-extract)
+# i18n Extract [![Build Status](https://travis-ci.org/oliviertassinari/i18n-extract.svg)](https://travis-ci.org/oliviertassinari/i18n-extract) [![npm version](https://badge.fury.io/js/i18n-extract.svg)](http://badge.fury.io/js/i18n-extract)
 
 > Extract messages from js and jsx to po
 
