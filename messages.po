@@ -1,0 +1,14 @@
+msgid ""
+msgstr ""
+"Language: fr\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Follow"
+msgstr "Suivre"
+
+msgid "Followed!"
+msgstr "Suivi !"
+
+msgid "Old message"
+msgstr "View message"

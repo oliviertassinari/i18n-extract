@@ -1,0 +1,37 @@
+{
+  "name": "i18n-extract",
+  "version": "0.0.1",
+  "description": "Extract messages from js and jsx to po",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oliviertassinari/18n-extract.git"
+  },
+  "keywords": [
+    "i18n",
+    "js",
+    "jsx",
+    "extract",
+    "react",
+    "po",
+    "gettext"
+  ],
+  "homepage": "https://github.com/oliviertassinari/18n-extract",
+  "author": "olivier.tassinari@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "esprima-fb": "^15001.1.0-dev-harmony-fb",
+    "glob": "^5.0.14",
+    "traverse": "^0.6.6"
+  },
+  "devDependencies": {
+    "chai": "^3.0.0",
+    "mocha": "^2.2.5"
+  },
+  "bugs": {
+    "url": "https://github.com/oliviertassinari/18n-extract/issues"
+  }
+}
