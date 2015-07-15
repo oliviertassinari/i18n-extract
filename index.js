@@ -81,9 +81,11 @@ module.exports.mergeMessagesWithPO = function(messages, poFileName, outputFileNa
   var translations = {};
 
   messages.forEach(function(message) {
-    translations[message] = poTransalations[message];
-
-    if(!translations[message]) {
+    // The translation already exist
+    if(poTransalations[message]) {
+      translations[message] = poTransalations[message];
+      delete translations[message].comments;
+    } else {
       translations[message] = {
         msgid: message,
         msgstr: [

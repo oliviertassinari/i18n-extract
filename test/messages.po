@@ -7,6 +7,7 @@ msgstr ""
 msgid "Follow"
 msgstr "Suivre"
 
+#: outdatedfile.js:136
 msgid "Followed!"
 msgstr "Suivi !"
 
