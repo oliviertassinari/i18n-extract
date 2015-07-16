@@ -10,7 +10,7 @@ describe('i18nExtract', function() {
     it('should return 5 messages when scanning fixture.jsx', function() {
       var content = fs.readFileSync('fixture.jsx');
       var messages = i18nExtract.extractFromContent(content);
-      assert.sameMembers([
+      assert.deepEqual([
         'Follow',
         'Followed!',
         'Unfollowed!',
@@ -23,7 +23,7 @@ describe('i18nExtract', function() {
   describe('#extractFromFiles()', function() {
     it('should return 5 messages when scanning *.jsx', function() {
       var messages = i18nExtract.extractFromFiles('*.jsx');
-      assert.sameMembers([
+      assert.deepEqual([
         'Follow',
         'Followed!',
         'Unfollowed!',
@@ -37,7 +37,7 @@ describe('i18nExtract', function() {
         '*.jsx',
         'hello.js',
       ]);
-      assert.sameMembers([
+      assert.deepEqual([
         'Follow',
         'Followed!',
         'Unfollowed!',

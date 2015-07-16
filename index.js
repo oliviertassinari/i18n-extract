@@ -6,6 +6,13 @@ var glob = require('glob');
 var fs = require('fs');
 var gettextParser = require('gettext-parser');
 
+function uniq(array) {
+  var seen = {};
+  return array.filter(function(item) {
+    return seen[item] ? false : (seen[item] = true);
+  });
+}
+
 function match(actual, expected) {
   if (actual !== null && typeof actual === 'object') {
     var isMatching = true;
@@ -30,11 +37,15 @@ function extractFromContent(content) {
       return node.value;
     } else if (node.type === 'BinaryExpression' && node.operator === '+') {
       return getMessage(node.left) + getMessage(node.right);
+    } else if (node.type === 'Identifier') {
+      console.warn('We can\'t resolve : ' + node.name);
+      return null;
     } else {
-      console.warn('Unsupported ' + node.type);
-      return '';
+      console.warn('Unsupported type : ' + node.type);
+      return null;
     }
   }
+
   var stringMarker = {
     type: 'CallExpression',
     callee: {
@@ -49,11 +60,14 @@ function extractFromContent(content) {
   traverse(contentAst).forEach(function(node) {
     if (match(node, stringMarker)) {
       var message = getMessage(node.arguments[0]);
-      messages.push(message);
+
+      if (message) {
+        messages.push(message);
+      }
     }
   });
 
-  return messages;
+  return uniq(messages);
 }
 
 function extractFromFiles(filenames) {
@@ -77,13 +91,10 @@ function extractFromFiles(filenames) {
     messages = messages.concat(extractFromContent(content));
   });
 
-  return messages;
+  return uniq(messages);
 }
 
-module.exports.extractFromContent = extractFromContent;
-module.exports.extractFromFiles = extractFromFiles;
-
-module.exports.mergeMessagesWithPO = function(messages, poFileName, outputFileName) {
+function mergeMessagesWithPO(messages, poFileName, outputFileName) {
   var poContent = fs.readFileSync(poFileName);
   var po = gettextParser.po.parse(poContent);
 
@@ -113,10 +124,14 @@ module.exports.mergeMessagesWithPO = function(messages, poFileName, outputFileNa
 
   fs.writeFileSync(outputFileName, gettextParser.po.compile(po));
 
-  var messagesLengthBefore = Object.keys(poTransalations).length - 1;
+  var messagesLengthBefore = Object.keys(poTransalations).length - 1; // Not sure why the -1 is for
   var messagesLengthAfter = Object.keys(translations).length;
 
   console.log(outputFileName + ' has ' + messagesLengthAfter + ' messages.');
   console.log('We have added ' + messagesNew + ' messages.');
   console.log('We have removed ' + (messagesLengthBefore - messagesReused) + ' messages.');
-};
+}
+
+module.exports.extractFromContent = extractFromContent;
+module.exports.extractFromFiles = extractFromFiles;
+module.exports.mergeMessagesWithPO = mergeMessagesWithPO;

@@ -25,7 +25,7 @@ define([
         group: {}, // Group object from api
         onClick: null,
         buttonText: i18n('Follow'),
-        buttonStyle: 'blank',
+        buttonStyle: i18n('Follow'), // Test the uniq filter
         onToggle: function() {},
         onFinished: function() {},
         silent: false,
