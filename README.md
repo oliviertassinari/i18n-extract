@@ -15,7 +15,7 @@ npm install i18n-extract
 Parse the `content` to extract the argument of calls of i18n(`message`). 
 
 - `content` should be a string.
-- Return an array containing messages.
+- Return an array containing messages used.
 
 ```js
 var i18nExtract = require('i18n-extract');
@@ -31,8 +31,8 @@ var messages = i18nExtract.extractFromContent("
 
 Parse the `files` to extract the argument of calls of i18n(`message`).
 
-- `files` can be either an array of string or a string. You can also use a glob.
-- Return an array containing messages.
+- `files` can be either an array of strings or a string. You can also use a glob.
+- Return an array containing messages used in the source code.
 
 ```js
 var i18nExtract = require('i18n-extract');
