@@ -12,9 +12,9 @@ npm install i18n-extract
 
 ### extractFromContent(content)
 
-Parse the `content` to extract the argument of calls of i18n().
+Parse the `content` to extract the argument of calls of i18n(`message`). 
 
-- `content` should be a string
+- `content` should be a string.
 - Return an array containing messages.
 
 ```js
@@ -29,7 +29,7 @@ var messages = i18nExtract.extractFromContent("
 
 ### extractFromFiles(files)
 
-Parse the `files` to extract the argument of calls of i18n().
+Parse the `files` to extract the argument of calls of i18n(`message`).
 
 - `files` can be either an array of string or a string. You can also use a glob.
 - Return an array containing messages.
@@ -45,9 +45,9 @@ Output a new po file with only the messages present in `messages`.
 If a message is already present in the `poInput`, we keep the translation.
 If a message is not present, we add a new empty translation.
 
-- `messages` should be an array
-- `poInput` should be a string
-- `poInput` should be a string
+- `messages` should be an array.
+- `poInput` should be a string.
+- `poOutput` should be a string.
 
 ```js
 var i18nExtract = require('i18n-extract');
