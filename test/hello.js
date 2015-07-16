@@ -1,3 +1,3 @@
 'use strict';
 
-var hello = i18n('hello');
+var hello = i18n('h' + 'el' + 'lo');

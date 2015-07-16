@@ -10,11 +10,11 @@ function match(actual, expected) {
   if (actual !== null && typeof actual === 'object') {
     var isMatching = true;
 
-    for(var name in expected) {
-      if (expected.hasOwnProperty(name)) {
-        isMatching = isMatching && match(actual[name], expected[name]);
+    Object.keys(expected).forEach(function(key) {
+      if (expected.hasOwnProperty(key)) {
+        isMatching = isMatching && match(actual[key], expected[key]);
       }
-    }
+    });
 
     return isMatching;
   } else {
@@ -22,23 +22,33 @@ function match(actual, expected) {
   }
 }
 
-var stringMarker = {
-  type: 'CallExpression',
-  callee: {
-    type: 'Identifier',
-    name: 'i18n',
-  },
-};
-
 function extractFromContent(content) {
   var messages = [];
+
+  function getMessage(node) {
+    if (node.type === 'Literal') {
+      return node.value;
+    } else if (node.type === 'BinaryExpression' && node.operator === '+') {
+      return getMessage(node.left) + getMessage(node.right);
+    } else {
+      console.warn('Unsupported ' + node.type);
+      return '';
+    }
+  }
+  var stringMarker = {
+    type: 'CallExpression',
+    callee: {
+      type: 'Identifier',
+      name: 'i18n',
+    },
+  };
 
   // See the specs of the ast https://github.com/estree/estree/blob/master/spec.md
   var contentAst = esprima.parse(content);
 
   traverse(contentAst).forEach(function(node) {
     if (match(node, stringMarker)) {
-      var message = node.arguments[0].value;
+      var message = getMessage(node.arguments[0]);
       messages.push(message);
     }
   });
@@ -79,13 +89,17 @@ module.exports.mergeMessagesWithPO = function(messages, poFileName, outputFileNa
 
   var poTransalations = po.translations[''];
   var translations = {};
+  var messagesNew = 0;
+  var messagesReused = 0;
 
   messages.forEach(function(message) {
     // The translation already exist
     if(poTransalations[message]) {
+      messagesReused++;
       translations[message] = poTransalations[message];
       delete translations[message].comments;
     } else {
+      messagesNew++;
       translations[message] = {
         msgid: message,
         msgstr: [
@@ -97,5 +111,12 @@ module.exports.mergeMessagesWithPO = function(messages, poFileName, outputFileNa
 
   po.translations[''] = translations;
 
-  return fs.writeFileSync(outputFileName, gettextParser.po.compile(po));
+  fs.writeFileSync(outputFileName, gettextParser.po.compile(po));
+
+  var messagesLengthBefore = Object.keys(poTransalations).length - 1;
+  var messagesLengthAfter = Object.keys(translations).length;
+
+  console.log(outputFileName + ' has ' + messagesLengthAfter + ' messages.');
+  console.log('We have added ' + messagesNew + ' messages.');
+  console.log('We have removed ' + (messagesLengthBefore - messagesReused) + ' messages.');
 };

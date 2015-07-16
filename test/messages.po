@@ -11,5 +11,5 @@ msgstr "Suivre"
 msgid "Followed!"
 msgstr "Suivi !"
 
-msgid "Old message"
-msgstr "View message"
+msgid "Old message that will be removed"
+msgstr "View message qui sera supprimé"
