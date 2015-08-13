@@ -29,8 +29,9 @@ function match(actual, expected) {
   }
 }
 
-function extractFromContent(content) {
+function extractFromContent(content, options) {
   var messages = [];
+  options = options || {};
 
   function getMessage(node) {
     if (node.type === 'Literal') {
@@ -50,7 +51,7 @@ function extractFromContent(content) {
     type: 'CallExpression',
     callee: {
       type: 'Identifier',
-      name: 'i18n',
+      name: options.marker || 'i18n',
     },
   };
 
@@ -74,7 +75,7 @@ function extractFromContent(content) {
   return uniq(messages);
 }
 
-function extractFromFiles(filenames) {
+function extractFromFiles(filenames, options) {
   var messages = [];
 
   // filenames should be an array
@@ -92,7 +93,7 @@ function extractFromFiles(filenames) {
 
   filenamesToScan.forEach(function(filename) {
     var content = fs.readFileSync(filename);
-    messages = messages.concat(extractFromContent(content));
+    messages = messages.concat(extractFromContent(content, options));
   });
 
   return uniq(messages);

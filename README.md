@@ -10,7 +10,7 @@ npm install i18n-extract
 
 ## Usage
 
-### extractFromContent(content)
+### extractFromContent(content, [options])
 
 Parse the `content` to extract the argument of calls of i18n(`message`). 
 
@@ -27,7 +27,7 @@ var messages = i18nExtract.extractFromContent("
 // messages contains ['Follow', 'Follow me']
 ```
 
-### extractFromFiles(files)
+### extractFromFiles(files, [options])
 
 Parse the `files` to extract the argument of calls of i18n(`message`).
 
@@ -38,6 +38,10 @@ Parse the `files` to extract the argument of calls of i18n(`message`).
 var i18nExtract = require('i18n-extract');
 var messages = i18nExtract.extractFromFile(['*.jsx', '*.js']);
 ```
+
+### Options
+
+`marker`: The name of the internationalized string marker function. Defaults to `i18n`.
 
 ### mergeMessagesWithPO(messages, poInput, poOutput)
 
