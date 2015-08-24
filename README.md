@@ -36,7 +36,7 @@ Parse the `files` to extract the argument of calls of i18n(`message`).
 
 ```js
 var i18nExtract = require('i18n-extract');
-var messages = i18nExtract.extractFromFile(['*.jsx', '*.js']);
+var messages = i18nExtract.extractFromFiles(['*.jsx', '*.js']);
 ```
 
 ### mergeMessagesWithPO(messages, poInput, poOutput)
