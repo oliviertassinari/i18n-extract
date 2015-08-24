@@ -18,6 +18,16 @@ describe('i18nExtract', function() {
         'Following',
       ], messages);
     });
+
+    it('should return 1 message when scanning hello.js with marker option', function() {
+      var content = fs.readFileSync('hello.js');
+      var messages = i18nExtract.extractFromContent(content, {
+        marker: '__',
+      });
+      assert.deepEqual([
+        'this is a custom marker',
+      ], messages);
+    });
   });
 
   describe('#extractFromFiles()', function() {
@@ -29,6 +39,16 @@ describe('i18nExtract', function() {
         'Unfollowed!',
         'Unfollow',
         'Following',
+      ], messages);
+    });
+
+    it('should return 1 message when scanning hello.js with marker option', function() {
+      var content = fs.readFileSync('fixture.jsx');
+      var messages = i18nExtract.extractFromFiles('hello.js', {
+        marker: '__',
+      });
+      assert.deepEqual([
+        'this is a custom marker',
       ], messages);
     });
 
