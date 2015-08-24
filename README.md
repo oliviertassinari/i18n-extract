@@ -61,6 +61,9 @@ var i18nExtract = require('i18n-extract');
 var messages = ['Message 1', 'Message 2'];
 i18nExtract.mergeMessagesWithPO(messages, 'messages.po', 'messages.output.po');
 ```
+## Use case
+
+This module works well in conjunction with webpack and his localisation plugin : [i18n-webpack-plugin](https://github.com/webpack/i18n-webpack-plugin)
 
 ## License
 
