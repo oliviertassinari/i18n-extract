@@ -63,7 +63,7 @@ i18nExtract.mergeMessagesWithPO(messages, 'messages.po', 'messages.output.po');
 
 /**
  Will output :
- > messages.po has 812 messages.
+ > messages.output.po has 812 messages.
  > We have added 7 messages.
  > We have removed 3 messages.
 */
