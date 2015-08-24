@@ -1,6 +1,6 @@
 {
   "name": "i18n-extract",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "description": "Extract messages from js and jsx to po",
   "main": "index.js",
   "scripts": {
