@@ -1,3 +1,5 @@
+// fixture from https://github.com/gaearon/redux-devtools.
+
 import React, { PropTypes, findDOMNode } from 'react';
 import LogMonitorEntry from './LogMonitorEntry';
 import LogMonitorButton from './LogMonitorButton';
