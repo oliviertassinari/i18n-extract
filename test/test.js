@@ -7,8 +7,8 @@ var i18nExtract = require('../index.js');
 
 describe('i18nExtract', function() {
   describe('#extractFromContent()', function() {
-    it('should return 5 messages when scanning fixture.jsx', function() {
-      var content = fs.readFileSync('fixture.jsx');
+    it('should work when scanning jsx and es5 format', function() {
+      var content = fs.readFileSync('jsx-es5.jsx');
       var messages = i18nExtract.extractFromContent(content);
       assert.deepEqual([
         'Follow',
@@ -19,7 +19,7 @@ describe('i18nExtract', function() {
       ], messages);
     });
 
-    it('should return 1 message when scanning hello.js with marker option', function() {
+    it('should work when scanning with the marker option', function() {
       var content = fs.readFileSync('hello.js');
       var messages = i18nExtract.extractFromContent(content, {
         marker: '__',
@@ -31,7 +31,7 @@ describe('i18nExtract', function() {
   });
 
   describe('#extractFromFiles()', function() {
-    it('should return 5 messages when scanning *.jsx', function() {
+    it('should work when scanning with a glob and a string parameter', function() {
       var messages = i18nExtract.extractFromFiles('*.jsx');
       assert.deepEqual([
         'Follow',
@@ -42,17 +42,7 @@ describe('i18nExtract', function() {
       ], messages);
     });
 
-    it('should return 1 message when scanning hello.js with marker option', function() {
-      var content = fs.readFileSync('fixture.jsx');
-      var messages = i18nExtract.extractFromFiles('hello.js', {
-        marker: '__',
-      });
-      assert.deepEqual([
-        'this is a custom marker',
-      ], messages);
-    });
-
-    it('should return 6 messages when scanning *.jsx and hello.js', function() {
+    it('should work when scanning with an array as parameter', function() {
       var messages = i18nExtract.extractFromFiles([
         '*.jsx',
         'hello.js',

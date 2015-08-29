@@ -136,9 +136,7 @@ define([
 
       var followingText = this.state.hovered ? i18n('Unfollow') : i18n('Following');
 
-      var {className, ...other} = props;
-
-      return <button {...other} className={classNames(className, classes)} disabled={props.isDisabled} onClick={this.onClick}
+      return <button className={classNames(props.className, classes)} disabled={props.isDisabled} onClick={this.onClick}
           onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
           {isFollowing
             ? followingText
