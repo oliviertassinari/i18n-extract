@@ -8,7 +8,7 @@ var i18nExtract = require('../index.js');
 describe('i18nExtract', function() {
   describe('#extractFromContent()', function() {
     it('should work when scanning jsx and es5 format', function() {
-      var content = fs.readFileSync('jsx-es5.jsx');
+      var content = fs.readFileSync('jsx-es5.jsx', 'utf8');
       var messages = i18nExtract.extractFromContent(content);
       assert.deepEqual([
         'Follow',
@@ -19,8 +19,19 @@ describe('i18nExtract', function() {
       ], messages);
     });
 
+    it('should work when scanning jsx and es6 format', function() {
+      var content = fs.readFileSync('jsx-es6.jsx', 'utf8');
+      var messages = i18nExtract.extractFromContent(content);
+      assert.deepEqual([
+        'Reset',
+        'Revert',
+        'Sweep',
+        'Commit',
+      ], messages);
+    });
+
     it('should work when scanning with the marker option', function() {
-      var content = fs.readFileSync('hello.js');
+      var content = fs.readFileSync('hello.js', 'utf8');
       var messages = i18nExtract.extractFromContent(content, {
         marker: '__',
       });
@@ -32,7 +43,7 @@ describe('i18nExtract', function() {
 
   describe('#extractFromFiles()', function() {
     it('should work when scanning with a glob and a string parameter', function() {
-      var messages = i18nExtract.extractFromFiles('*.jsx');
+      var messages = i18nExtract.extractFromFiles('*es5.jsx');
       assert.deepEqual([
         'Follow',
         'Followed!',
@@ -44,7 +55,7 @@ describe('i18nExtract', function() {
 
     it('should work when scanning with an array as parameter', function() {
       var messages = i18nExtract.extractFromFiles([
-        '*.jsx',
+        '*es5.jsx',
         'hello.js',
       ]);
       assert.deepEqual([
@@ -61,7 +72,7 @@ describe('i18nExtract', function() {
   describe('#mergeMessagesWithPO()', function() {
     it('should output a new po file with 5 merged messages when we give a po file with one outdate message', function() {
       var output = 'messages2.po';
-      var messages = i18nExtract.extractFromFiles('*.jsx');
+      var messages = i18nExtract.extractFromFiles('*es5.jsx');
 
       i18nExtract.mergeMessagesWithPO(messages, 'messages.po', output);
 

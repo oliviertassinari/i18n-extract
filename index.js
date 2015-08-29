@@ -1,6 +1,6 @@
 'use strict';
 
-var esprima = require('esprima-fb');
+var babel = require('babel-core');
 var traverse = require('traverse');
 var glob = require('glob');
 var fs = require('fs');
@@ -56,7 +56,7 @@ function extractFromContent(content, options) {
   };
 
   // See the specs of the ast https://github.com/estree/estree/blob/master/spec.md
-  var contentAst = esprima.parse(content);
+  var contentAst = babel.parse(content);
 
   traverse(contentAst).forEach(function(node) {
     if (match(node, stringMarker)) {
@@ -92,7 +92,7 @@ function extractFromFiles(filenames, options) {
   });
 
   filenamesToScan.forEach(function(filename) {
-    var content = fs.readFileSync(filename);
+    var content = fs.readFileSync(filename, 'utf8');
     messages = messages.concat(extractFromContent(content, options));
   });
 
@@ -100,7 +100,7 @@ function extractFromFiles(filenames, options) {
 }
 
 function mergeMessagesWithPO(messages, poFileName, outputFileName) {
-  var poContent = fs.readFileSync(poFileName);
+  var poContent = fs.readFileSync(poFileName, 'utf8');
   var po = gettextParser.po.parse(poContent);
 
   var poTransalations = po.translations[''];
