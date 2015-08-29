@@ -22,7 +22,9 @@ var i18nExtract = require('i18n-extract');
 var messages = i18nExtract.extractFromContent("
   var follow = i18n('Follow');
   var followMe = i18n('Follow ' + 'me');
-");
+", {
+  marker: 'i18n',
+});
 
 // messages contains ['Follow', 'Follow me']
 ```
@@ -39,7 +41,9 @@ var i18nExtract = require('i18n-extract');
 var messages = i18nExtract.extractFromFiles([
   '*.jsx',
   '*.js',
-]);
+], {
+  marker: 'i18n',
+});
 ```
 
 ### Options
