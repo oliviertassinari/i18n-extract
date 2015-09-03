@@ -1,5 +1,7 @@
 # i18n Extract [![Build Status](https://travis-ci.org/oliviertassinari/i18n-extract.svg)](https://travis-ci.org/oliviertassinari/i18n-extract) [![npm version](https://badge.fury.io/js/i18n-extract.svg)](http://badge.fury.io/js/i18n-extract)
 
+[![Join the chat at https://gitter.im/oliviertassinari/i18n-extract](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/oliviertassinari/i18n-extract?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 > Extract messages from js and jsx to po
 
 ## Installation
