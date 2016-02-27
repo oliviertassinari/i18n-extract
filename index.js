@@ -60,14 +60,10 @@ function extractFromContent(content, options) {
 
   traverse(contentAst).forEach(function(node) {
     if (match(node, stringMarker)) {
-      if (node.arguments.length === 1) {
-        var message = getMessage(node.arguments[0]);
+      var message = getMessage(node.arguments[0]);
 
-        if (message) {
-          messages.push(message);
-        }
-      } else {
-        console.warn('To many arguments', node.arguments);
+      if (message) {
+        messages.push(message);
       }
     }
   });
