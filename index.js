@@ -89,7 +89,11 @@ function extractFromFiles(filenames, options) {
 
   filenamesToScan.forEach(function(filename) {
     var content = fs.readFileSync(filename, 'utf8');
-    messages = messages.concat(extractFromContent(content, options));
+    try {
+      messages = messages.concat(extractFromContent(content, options));
+    } catch (e) {
+      throw "Error extracing from file: " + filename + "\n" + e;
+    }
   });
 
   return uniq(messages);
