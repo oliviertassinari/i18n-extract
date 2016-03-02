@@ -39,6 +39,14 @@ describe('i18nExtract', function() {
         'this is a custom marker',
       ], messages);
     });
+
+    it('should work with multiple arguments in the i18n function', function() {
+      var content = fs.readFileSync('many-args.js', 'utf8');
+      var messages = i18nExtract.extractFromContent(content);
+      assert.deepEqual([
+        'Hello, {{username}}!',
+      ], messages);
+    });
   });
 
   describe('#extractFromFiles()', function() {
