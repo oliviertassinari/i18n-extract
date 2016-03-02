@@ -1,8 +1,13 @@
-# i18n Extract [![Build Status](https://travis-ci.org/oliviertassinari/i18n-extract.svg)](https://travis-ci.org/oliviertassinari/i18n-extract) [![npm version](https://badge.fury.io/js/i18n-extract.svg)](http://badge.fury.io/js/i18n-extract)
+# i18n Extract
 
-[![Join the chat at https://gitter.im/oliviertassinari/i18n-extract](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/oliviertassinari/i18n-extract?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+> Extract messages from js and jsx to po.
 
-> Extract messages from js and jsx to po
+[![npm version](https://img.shields.io/npm/v/i18n-extract.svg?style=flat-square)](https://www.npmjs.com/package/i18n-extract)
+[![npm downloads](https://img.shields.io/npm/dm/i18n-extract.svg?style=flat-square)](https://www.npmjs.com/package/i18n-extract)
+[![Build Status](https://travis-ci.org/oliviertassinari/i18n-extract.svg?branch=master)](https://travis-ci.org/oliviertassinari/i18n-extract)
+
+[![Dependencies](https://img.shields.io/david/oliviertassinari/i18n-extract.svg?style=flat-square)](https://david-dm.org/oliviertassinari/i18n-extract)
+[![DevDependencies](https://img.shields.io/david/dev/oliviertassinari/i18n-extract.svg?style=flat-square)](https://david-dm.org/oliviertassinari/i18n-extract#info=devDependencies&view=list)
 
 ## Installation
 
