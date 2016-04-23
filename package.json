@@ -23,7 +23,7 @@
   "dependencies": {
     "babel-core": "^5.8.23",
     "gettext-parser": "^1.1.1",
-    "glob": "^5.0.14",
+    "glob": "^7.0.3",
     "traverse": "^0.6.6"
   },
   "devDependencies": {
