@@ -87,7 +87,3 @@ This module works well in conjunction with webpack and his localisation plugin :
 ## License
 
 MIT
-
-## Changelog
-
-See [CHANGELOG.md](https://github.com/oliviertassinari/i18n-extract/tree/master/CHANGELOG.md)
