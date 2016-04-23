@@ -1,5 +1,1 @@
-node_modules
-
-# IDE
-*.sublime-project
-*.sublime-workspace
+/node_modules
