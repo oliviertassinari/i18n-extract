@@ -1,7 +1,7 @@
 {
   "name": "i18n-extract",
   "version": "0.2.0",
-  "description": "Extract messages from js and jsx to po",
+  "description": "Manage localization of ES6 code with static analysis",
   "main": "index.js",
   "scripts": {
     "test": "cd test && mocha test.js"
@@ -12,15 +12,13 @@
   },
   "keywords": [
     "i18n",
-    "js",
-    "jsx",
-    "extract",
-    "react",
-    "po",
-    "gettext"
+    "localization",
+    "translation",
+    "ES6",
+    "static analysis"
   ],
   "homepage": "https://github.com/oliviertassinari/i18n-extract",
-  "author": "olivier.tassinari@gmail.com",
+  "author": "Olivier Tassinari <olivier.tassinari@gmail.com> (https://github.com/oliviertassinari)",
   "license": "MIT",
   "dependencies": {
     "babel-core": "^5.8.23",
