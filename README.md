@@ -17,16 +17,16 @@ npm install i18n-extract
 
 ## Usage
 
-### extractFromContent(content, [options])
+### extractFromCode(code, [options])
 
-Parse the `content` to extract the argument of calls of i18n(`message`).
+Parse the `code` to extract the argument of calls of i18n(`message`).
 
-- `content` should be a string.
+- `code` should be a string.
 - Return an array containing messages used.
 
 ```js
 var i18nExtract = require('i18n-extract');
-var messages = i18nExtract.extractFromContent("
+var messages = i18nExtract.extractFromCode("
   var follow = i18n('Follow');
   var followMe = i18n('Follow ' + 'me');
 ", {

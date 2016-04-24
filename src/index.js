@@ -11,7 +11,7 @@ function uniq(array) {
   });
 }
 
-function extractFromContent(code, options) {
+function extractFromCode(code, options) {
   const messages = [];
   options = options || {};
 
@@ -82,8 +82,8 @@ function extractFromFiles(filenames, options) {
   });
 
   filenamesToScan.forEach((filename) => {
-    const content = fs.readFileSync(filename, 'utf8');
-    messages = messages.concat(extractFromContent(content, options));
+    const code = fs.readFileSync(filename, 'utf8');
+    messages = messages.concat(extractFromCode(code, options));
   });
 
   return uniq(messages);
@@ -127,6 +127,6 @@ function mergeMessagesWithPO(messages, poFileName, outputFileName) {
   console.log(`We have removed ${messagesLengthBefore - messagesReused} messages.`);
 }
 
-module.exports.extractFromContent = extractFromContent;
+module.exports.extractFromCode = extractFromCode;
 module.exports.extractFromFiles = extractFromFiles;
 module.exports.mergeMessagesWithPO = mergeMessagesWithPO;

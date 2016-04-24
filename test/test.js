@@ -4,10 +4,10 @@ import gettextParser from 'gettext-parser';
 import i18nExtract from '../src/index.js';
 
 describe('i18nExtract', () => {
-  describe('#extractFromContent()', () => {
+  describe('#extractFromCode()', () => {
     it('should work when scanning jsx and es5 format', () => {
-      const content = fs.readFileSync('jsx-es5.jsx', 'utf8');
-      const messages = i18nExtract.extractFromContent(content);
+      const code = fs.readFileSync('jsx-es5.jsx', 'utf8');
+      const messages = i18nExtract.extractFromCode(code);
       assert.deepEqual([
         'Follow',
         'Followed!',
@@ -18,8 +18,8 @@ describe('i18nExtract', () => {
     });
 
     it('should work when scanning jsx and es6 format', () => {
-      const content = fs.readFileSync('jsx-es6.jsx', 'utf8');
-      const messages = i18nExtract.extractFromContent(content);
+      const code = fs.readFileSync('jsx-es6.jsx', 'utf8');
+      const messages = i18nExtract.extractFromCode(code);
       assert.deepEqual([
         'Reset',
         'Revert',
@@ -29,8 +29,8 @@ describe('i18nExtract', () => {
     });
 
     it('should work when scanning with the marker option', () => {
-      const content = fs.readFileSync('hello.js', 'utf8');
-      const messages = i18nExtract.extractFromContent(content, {
+      const code = fs.readFileSync('hello.js', 'utf8');
+      const messages = i18nExtract.extractFromCode(code, {
         marker: '__',
       });
       assert.deepEqual([
@@ -39,8 +39,8 @@ describe('i18nExtract', () => {
     });
 
     it('should work with multiple arguments in the i18n function', () => {
-      const content = fs.readFileSync('many-args.js', 'utf8');
-      const messages = i18nExtract.extractFromContent(content);
+      const code = fs.readFileSync('many-args.js', 'utf8');
+      const messages = i18nExtract.extractFromCode(code);
       assert.deepEqual([
         'Hello, {{username}}!',
       ], messages);
