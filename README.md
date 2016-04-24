@@ -1,4 +1,4 @@
-# i18n Extract
+# i18n extract
 
 > Manage localization of ES6 code with static analysis
 
@@ -15,7 +15,19 @@
 npm install i18n-extract
 ```
 
-## Usage
+## Use case
+
+This module analyses code statically for key usages, such as `i18n.t('some.key')`, in order to:
+
+- Report keys that are missing
+- Report keys that are unused.
+- Report keys that are higly duplicated.
+
+E.g. This module works well in conjunction with:
+- [polyglot.js](https://github.com/airbnb/polyglot.js)
+- webpack and his localisation plugin: [i18n-webpack-plugin](https://github.com/webpack/i18n-webpack-plugin)
+
+## API
 
 ### extractFromCode(code, [options])
 
@@ -24,16 +36,14 @@ Parse the `code` to extract the argument of calls of i18n(`message`).
 - `code` should be a string.
 - Return an array containing messages used.
 
+##### Example
+
 ```js
-var i18nExtract = require('i18n-extract');
-var messages = i18nExtract.extractFromCode("
-  var follow = i18n('Follow');
-  var followMe = i18n('Follow ' + 'me');
-", {
+import {extractFromCode} from 'i18n-extract';
+const messages = extractFromCode("const followMe = i18n('b2b.' + 'follow');", {
   marker: 'i18n',
 });
-
-// messages contains ['Follow', 'Follow me']
+// messages = ['b2b.follow']
 ```
 
 ### extractFromFiles(files, [options])
@@ -43,9 +53,11 @@ Parse the `files` to extract the argument of calls of i18n(`message`).
 - `files` can be either an array of strings or a string. You can also use a glob.
 - Return an array containing messages used in the source code.
 
+##### Example
+
 ```js
-var i18nExtract = require('i18n-extract');
-var messages = i18nExtract.extractFromFiles([
+import {extractFromFiles} from 'i18n-extract';
+const messages = extractFromFiles([
   '*.jsx',
   '*.js',
 ], {
@@ -67,10 +79,13 @@ If a message is not present, we add a new empty translation.
 - `poInput` should be a string.
 - `poOutput` should be a string.
 
+##### Example
+
 ```js
-var i18nExtract = require('i18n-extract');
-var messages = ['Message 1', 'Message 2'];
-i18nExtract.mergeMessagesWithPO(messages, 'messages.po', 'messages.output.po');
+import {mergeMessagesWithPO} from 'i18n-extract';
+
+const messages = ['Message 1', 'Message 2'];
+mergeMessagesWithPO(messages, 'messages.po', 'messages.output.po');
 
 /**
  Will output :
@@ -79,10 +94,6 @@ i18nExtract.mergeMessagesWithPO(messages, 'messages.po', 'messages.output.po');
  > We have removed 3 messages.
 */
 ```
-
-## Use case
-
-This module works well in conjunction with webpack and his localisation plugin : [i18n-webpack-plugin](https://github.com/webpack/i18n-webpack-plugin).
 
 ## License
 

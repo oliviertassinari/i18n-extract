@@ -1,13 +1,17 @@
 import {assert} from 'chai';
 import fs from 'fs';
 import gettextParser from 'gettext-parser';
-import i18nExtract from '../src/index.js';
+import {
+  extractFromCode,
+  extractFromFiles,
+  mergeMessagesWithPO,
+} from '../src/index.js';
 
 describe('i18nExtract', () => {
   describe('#extractFromCode()', () => {
     it('should work when scanning jsx and es5 format', () => {
       const code = fs.readFileSync('jsx-es5.jsx', 'utf8');
-      const messages = i18nExtract.extractFromCode(code);
+      const messages = extractFromCode(code);
       assert.deepEqual([
         'Follow',
         'Followed!',
@@ -19,7 +23,7 @@ describe('i18nExtract', () => {
 
     it('should work when scanning jsx and es6 format', () => {
       const code = fs.readFileSync('jsx-es6.jsx', 'utf8');
-      const messages = i18nExtract.extractFromCode(code);
+      const messages = extractFromCode(code);
       assert.deepEqual([
         'Reset',
         'Revert',
@@ -30,7 +34,7 @@ describe('i18nExtract', () => {
 
     it('should work when scanning with the marker option', () => {
       const code = fs.readFileSync('hello.js', 'utf8');
-      const messages = i18nExtract.extractFromCode(code, {
+      const messages = extractFromCode(code, {
         marker: '__',
       });
       assert.deepEqual([
@@ -40,7 +44,7 @@ describe('i18nExtract', () => {
 
     it('should work with multiple arguments in the i18n function', () => {
       const code = fs.readFileSync('many-args.js', 'utf8');
-      const messages = i18nExtract.extractFromCode(code);
+      const messages = extractFromCode(code);
       assert.deepEqual([
         'Hello, {{username}}!',
       ], messages);
@@ -49,7 +53,7 @@ describe('i18nExtract', () => {
 
   describe('#extractFromFiles()', () => {
     it('should work when scanning with a glob and a string parameter', () => {
-      const messages = i18nExtract.extractFromFiles('*es5.jsx');
+      const messages = extractFromFiles('*es5.jsx');
       assert.deepEqual([
         'Follow',
         'Followed!',
@@ -60,7 +64,7 @@ describe('i18nExtract', () => {
     });
 
     it('should work when scanning with an array as parameter', () => {
-      const messages = i18nExtract.extractFromFiles([
+      const messages = extractFromFiles([
         '*es5.jsx',
         'hello.js',
       ]);
@@ -78,9 +82,9 @@ describe('i18nExtract', () => {
   describe('#mergeMessagesWithPO()', () => {
     it('should output a new po file with 5 merged messages when we give a po file with one outdate message', () => {
       const output = 'messages2.po';
-      const messages = i18nExtract.extractFromFiles('*es5.jsx');
+      const messages = extractFromFiles('*es5.jsx');
 
-      i18nExtract.mergeMessagesWithPO(messages, 'messages.po', output);
+      mergeMessagesWithPO(messages, 'messages.po', output);
 
       const poContent = fs.readFileSync(output);
       const po = gettextParser.po.parse(poContent);
