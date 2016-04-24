@@ -4,7 +4,7 @@
   "description": "Manage localization of ES6 code with static analysis",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint .",
+    "lint": "eslint --ext .jsx,.js .",
     "test:unit": "cd test && mocha test.js --compilers js:babel-core/register",
     "test": "npm run lint && npm run test:unit",
     "build": "rm -rf lib && mkdir lib && babel src --out-dir lib",

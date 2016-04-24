@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 var classNames = require('classnames');
 
 define([

@@ -2,6 +2,7 @@
 import React, {PropTypes, findDOMNode} from 'react';
 import LogMonitorEntry from './LogMonitorEntry';
 import LogMonitorButton from './LogMonitorButton';
+import i18n from 'i18n';
 import * as themes from './themes';
 
 const styles = {
@@ -45,15 +46,8 @@ export default class LogMonitor {
     currentStateIndex: PropTypes.number.isRequired,
     monitorState: PropTypes.object.isRequired,
     stagedActions: PropTypes.array.isRequired,
-    skippedActions: PropTypes.object.isRequired,
-    reset: PropTypes.func.isRequired,
-    commit: PropTypes.func.isRequired,
-    rollback: PropTypes.func.isRequired,
     sweep: PropTypes.func.isRequired,
     toggleAction: PropTypes.func.isRequired,
-    jumpToState: PropTypes.func.isRequired,
-    setMonitorState: PropTypes.func.isRequired,
-    select: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -148,7 +142,7 @@ export default class LogMonitor {
       if (typeof themes[this.props.theme] !== 'undefined') {
         theme = themes[this.props.theme];
       } else {
-        console.warn('DevTools theme ' + this.props.theme + ' not found, defaulting to nicinabox');
+        console.warn(`DevTools theme ${this.props.theme} not found, defaulting to nicinabox`);
         theme = themes.nicinabox;
       }
     } else {
@@ -169,16 +163,18 @@ export default class LogMonitor {
         previousState = computedStates[i - 1].state;
       }
       elements.push(
-        <LogMonitorEntry key={i}
-                         index={i}
-                         theme={theme}
-                         select={select}
-                         action={action}
-                         state={state}
-                         previousState={previousState}
-                         collapsed={skippedActions[i]}
-                         error={error}
-                         onActionClick={::this.handleToggleAction} />
+        <LogMonitorEntry
+          key={i}
+          index={i}
+          theme={theme}
+          select={select}
+          action={action}
+          state={state}
+          previousState={previousState}
+          collapsed={skippedActions[i]}
+          error={error}
+          onActionClick={::this.handleToggleAction}
+        />
       );
     }
 
@@ -191,7 +187,11 @@ export default class LogMonitor {
           <LogMonitorButton theme={theme} onClick={::this.handleRollback} enabled={computedStates.length}>
             {i18n('Revert')}
           </LogMonitorButton>
-          <LogMonitorButton theme={theme} onClick={::this.handleSweep} enabled={Object.keys(skippedActions).some(key => skippedActions[key])}>
+          <LogMonitorButton
+            theme={theme}
+            onClick={::this.handleSweep}
+            enabled={Object.keys(skippedActions).some((key) => skippedActions[key])}
+          >
             {i18n('Sweep')}
           </LogMonitorButton>
           <LogMonitorButton theme={theme} onClick={::this.handleCommit} enabled={computedStates.length > 1}>
