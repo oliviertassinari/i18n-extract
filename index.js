@@ -1,7 +1,7 @@
 'use strict';
 
-var babel = require('babel-core');
-var traverse = require('traverse');
+var babylon = require('babylon');
+var traverse = require('babel-traverse').default;
 var glob = require('glob');
 var fs = require('fs');
 var gettextParser = require('gettext-parser');
@@ -29,12 +29,12 @@ function match(actual, expected) {
   }
 }
 
-function extractFromContent(content, options) {
+function extractFromContent(code, options) {
   var messages = [];
   options = options || {};
 
   function getMessage(node) {
-    if (node.type === 'Literal') {
+    if (node.type === 'StringLiteral') {
       return node.value;
     } else if (node.type === 'BinaryExpression' && node.operator === '+') {
       return getMessage(node.left) + getMessage(node.right);
@@ -56,16 +56,36 @@ function extractFromContent(content, options) {
   };
 
   // See the specs of the ast https://github.com/estree/estree/blob/master/spec.md
-  var contentAst = babel.parse(content);
+  var ast = babylon.parse(code, {
+    sourceType: 'module',
 
-  traverse(contentAst).forEach(function(node) {
-    if (match(node, stringMarker)) {
-      var message = getMessage(node.arguments[0]);
+    // Enable all the plugins
+    plugins: [
+      'jsx',
+      'flow',
+      'asyncFunctions',
+      'classConstructorCall',
+      'doExpressions',
+      'trailingFunctionCommas',
+      'objectRestSpread',
+      'decorators',
+      'classProperties',
+      'exportExtensions',
+      'exponentiationOperator',
+      'asyncGenerators',
+      'functionBind',
+      'functionSent',
+    ],
+  });
 
-      if (message) {
-        messages.push(message);
+  traverse(ast, {
+    CallExpression(path) {
+      const callee = path.node.callee;
+
+      if (callee.type === 'Identifier' && callee.name === (options.marker || 'i18n')) {
+        messages.push(getMessage(path.node.arguments[0]));
       }
-    }
+    },
   });
 
   return uniq(messages);

@@ -1,6 +1,5 @@
 // fixture from https://github.com/gaearon/redux-devtools.
-
-import React, { PropTypes, findDOMNode } from 'react';
+import React, {PropTypes, findDOMNode} from 'react';
 import LogMonitorEntry from './LogMonitorEntry';
 import LogMonitorButton from './LogMonitorButton';
 import * as themes from './themes';
@@ -12,7 +11,7 @@ const styles = {
     overflowY: 'hidden',
     width: '100%',
     height: '100%',
-    minWidth: 300
+    minWidth: 300,
   },
   buttonBar: {
     textAlign: 'center',
@@ -21,7 +20,7 @@ const styles = {
     borderColor: 'transparent',
     zIndex: 1,
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   elements: {
     position: 'absolute',
@@ -30,8 +29,8 @@ const styles = {
     top: 38,
     bottom: 0,
     overflowX: 'hidden',
-    overflowY: 'auto'
-  }
+    overflowY: 'auto',
+  },
 };
 
 export default class LogMonitor {
@@ -54,13 +53,15 @@ export default class LogMonitor {
     toggleAction: PropTypes.func.isRequired,
     jumpToState: PropTypes.func.isRequired,
     setMonitorState: PropTypes.func.isRequired,
-    select: PropTypes.func.isRequired
+    select: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
     select: (state) => state,
-    monitorState: { isVisible: true },
-    theme: 'nicinabox'
+    monitorState: {
+      isVisible: true,
+    },
+    theme: 'nicinabox',
   };
 
   componentWillReceiveProps(nextProps) {
@@ -70,7 +71,11 @@ export default class LogMonitor {
     } else if (
       this.props.stagedActions.length < nextProps.stagedActions.length
     ) {
-      const { scrollTop, offsetHeight, scrollHeight } = node;
+      const {
+        scrollTop,
+        offsetHeight,
+        scrollHeight,
+      } = node;
 
       this.scrollDown = Math.abs(
         scrollHeight - (scrollTop + offsetHeight)
@@ -86,7 +91,10 @@ export default class LogMonitor {
       return;
     }
     if (this.scrollDown) {
-      const { offsetHeight, scrollHeight } = node;
+      const {
+        offsetHeight,
+        scrollHeight,
+      } = node;
       node.scrollTop = scrollHeight - offsetHeight;
       this.scrollDown = false;
     }
@@ -113,20 +121,28 @@ export default class LogMonitor {
   }
 
   handleKeyPress(event) {
-    const { monitorState } = this.props;
+    const {
+      monitorState,
+    } = this.props;
 
     if (event.ctrlKey && event.keyCode === 72) { // Ctrl+H
       event.preventDefault();
       this.props.setMonitorState({
         ...monitorState,
-        isVisible: !monitorState.isVisible
+        isVisible: !monitorState.isVisible,
       });
     }
   }
 
   render() {
     const elements = [];
-    const { monitorState, skippedActions, stagedActions, computedStates, select } = this.props;
+    const {
+      monitorState,
+      skippedActions,
+      stagedActions,
+      computedStates,
+      select,
+    } = this.props;
     let theme;
     if (typeof this.props.theme === 'string') {
       if (typeof themes[this.props.theme] !== 'undefined') {
@@ -144,7 +160,10 @@ export default class LogMonitor {
 
     for (let i = 0; i < stagedActions.length; i++) {
       const action = stagedActions[i];
-      const { state, error } = computedStates[i];
+      const {
+        state,
+        error,
+      } = computedStates[i];
       let previousState;
       if (i > 0) {
         previousState = computedStates[i - 1].state;

@@ -4,7 +4,7 @@ define([
   'react',
   'backbone',
   'js/mixins/betelgeuse',
-  'jsx/lib/alert'
+  'jsx/lib/alert',
 ], function(
   React,
   Backbone,
@@ -41,7 +41,7 @@ define([
     getInitialState: function() {
       return {
         hovered: false,
-        changePending: false
+        changePending: false,
       };
     },
 
@@ -52,7 +52,7 @@ define([
       this.app.setAlert(<Alert type="success">{i18n('Followed!')}</Alert>);
 
       this.setState({
-        changePending: false
+        changePending: false,
       });
 
       // Analytics tracking
@@ -66,7 +66,7 @@ define([
       this.app.setAlert(<Alert type="success">{i18n('Unfollowed!')}</Alert>);
 
       this.setState({
-        changePending: false
+        changePending: false,
       });
     },
 
@@ -89,7 +89,7 @@ define([
         }
 
         this.setState({
-          changePending: true
+          changePending: true,
         });
 
         var change = this.props.isFollowing
@@ -143,7 +143,7 @@ define([
             : (props.children || props.buttonText)
           }
         </button>;
-    }
+    },
   });
 
   return FollowButton;
