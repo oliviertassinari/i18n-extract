@@ -1,8 +1,9 @@
-'use strict';
+import i18n from 'i18n';
 
-var user = {
+const user = {
   username: 'world',
 };
-var greeting = i18n('Hello, {{username}}!', {
+
+i18n('Hello, {{username}}!', {
   username: user.username,
 });

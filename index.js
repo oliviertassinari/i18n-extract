@@ -1,36 +1,18 @@
-'use strict';
-
-var babylon = require('babylon');
-var traverse = require('babel-traverse').default;
-var glob = require('glob');
-var fs = require('fs');
-var gettextParser = require('gettext-parser');
+import {parse} from 'babylon';
+import traverse from 'babel-traverse';
+import glob from 'glob';
+import fs from 'fs';
+import gettextParser from 'gettext-parser';
 
 function uniq(array) {
-  var seen = {};
-  return array.filter(function(item) {
+  const seen = {};
+  return array.filter((item) => {
     return seen[item] ? false : (seen[item] = true);
   });
 }
 
-function match(actual, expected) {
-  if (actual !== null && typeof actual === 'object') {
-    var isMatching = true;
-
-    Object.keys(expected).forEach(function(key) {
-      if (expected.hasOwnProperty(key)) {
-        isMatching = isMatching && match(actual[key], expected[key]);
-      }
-    });
-
-    return isMatching;
-  } else {
-    return actual === expected;
-  }
-}
-
 function extractFromContent(code, options) {
-  var messages = [];
+  const messages = [];
   options = options || {};
 
   function getMessage(node) {
@@ -38,25 +20,13 @@ function extractFromContent(code, options) {
       return node.value;
     } else if (node.type === 'BinaryExpression' && node.operator === '+') {
       return getMessage(node.left) + getMessage(node.right);
-    } else if (node.type === 'Identifier') {
-      console.warn('We can\'t resolve : ' + node.name);
-      return null;
     } else {
-      console.warn('Unsupported type : ' + node.type);
+      console.warn(`Unsupported node : ${node}`);
       return null;
     }
   }
 
-  var stringMarker = {
-    type: 'CallExpression',
-    callee: {
-      type: 'Identifier',
-      name: options.marker || 'i18n',
-    },
-  };
-
-  // See the specs of the ast https://github.com/estree/estree/blob/master/spec.md
-  var ast = babylon.parse(code, {
+  const ast = parse(code, {
     sourceType: 'module',
 
     // Enable all the plugins
@@ -83,7 +53,11 @@ function extractFromContent(code, options) {
       const callee = path.node.callee;
 
       if (callee.type === 'Identifier' && callee.name === (options.marker || 'i18n')) {
-        messages.push(getMessage(path.node.arguments[0]));
+        const message = getMessage(path.node.arguments[0]);
+
+        if (message) {
+          messages.push(message);
+        }
       }
     },
   });
@@ -92,7 +66,7 @@ function extractFromContent(code, options) {
 }
 
 function extractFromFiles(filenames, options) {
-  var messages = [];
+  let messages = [];
 
   // filenames should be an array
   if (typeof filenames === 'string') {
@@ -101,14 +75,14 @@ function extractFromFiles(filenames, options) {
     ];
   }
 
-  var filenamesToScan = [];
+  let filenamesToScan = [];
 
-  filenames.forEach(function(filename) {
+  filenames.forEach((filename) => {
     filenamesToScan = filenamesToScan.concat(glob.sync(filename, {}));
   });
 
-  filenamesToScan.forEach(function(filename) {
-    var content = fs.readFileSync(filename, 'utf8');
+  filenamesToScan.forEach((filename) => {
+    const content = fs.readFileSync(filename, 'utf8');
     messages = messages.concat(extractFromContent(content, options));
   });
 
@@ -116,17 +90,17 @@ function extractFromFiles(filenames, options) {
 }
 
 function mergeMessagesWithPO(messages, poFileName, outputFileName) {
-  var poContent = fs.readFileSync(poFileName, 'utf8');
-  var po = gettextParser.po.parse(poContent);
+  const poContent = fs.readFileSync(poFileName, 'utf8');
+  const po = gettextParser.po.parse(poContent);
 
-  var poTransalations = po.translations[''];
-  var translations = {};
-  var messagesNew = 0;
-  var messagesReused = 0;
+  const poTransalations = po.translations[''];
+  const translations = {};
+  let messagesNew = 0;
+  let messagesReused = 0;
 
-  messages.forEach(function(message) {
+  messages.forEach((message) => {
     // The translation already exist
-    if(poTransalations[message]) {
+    if (poTransalations[message]) {
       messagesReused++;
       translations[message] = poTransalations[message];
       delete translations[message].comments;
@@ -145,12 +119,12 @@ function mergeMessagesWithPO(messages, poFileName, outputFileName) {
 
   fs.writeFileSync(outputFileName, gettextParser.po.compile(po));
 
-  var messagesLengthBefore = Object.keys(poTransalations).length - 1; // Not sure why the -1 is for
-  var messagesLengthAfter = Object.keys(translations).length;
+  const messagesLengthBefore = Object.keys(poTransalations).length - 1; // Not sure why the -1 is for
+  const messagesLengthAfter = Object.keys(translations).length;
 
-  console.log(outputFileName + ' has ' + messagesLengthAfter + ' messages.');
-  console.log('We have added ' + messagesNew + ' messages.');
-  console.log('We have removed ' + (messagesLengthBefore - messagesReused) + ' messages.');
+  console.log(`${outputFileName} has ${messagesLengthAfter} messages.`);
+  console.log(`We have added ${messagesNew} messages.`);
+  console.log(`We have removed ${messagesLengthBefore - messagesReused} messages.`);
 }
 
 module.exports.extractFromContent = extractFromContent;

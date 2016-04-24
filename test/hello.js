@@ -1,5 +1,6 @@
-'use strict';
+import i18n from 'i18n';
+import __ from 'i18n';
 
-var Follow = i18n('Follow'); // Test the uniq filter
-var hello = i18n('h' + 'el' + 'lo');
-var useWhatEverMarkerYouWant = __('this is a custom marker');
+i18n('Follow'); // Test the uniq filter
+i18n('h' + 'el' + 'lo'); // Test for key concatenation
+__('this is a custom marker'); // Text for a custom marker

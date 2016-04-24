@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
-    "test:unit": "cd test && mocha test.js",
+    "test:unit": "cd test && mocha test.js --compilers js:babel-core/register",
     "test": "npm run lint && npm run test:unit",
     "build": "rm -rf lib && mkdir lib && babel src --out-dir lib",
     "prepublish": "npm run build"

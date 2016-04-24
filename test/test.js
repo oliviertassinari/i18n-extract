@@ -1,15 +1,13 @@
-'use strict';
+import {assert} from 'chai';
+import fs from 'fs';
+import gettextParser from 'gettext-parser';
+import i18nExtract from '../index.js';
 
-var assert = require('chai').assert;
-var fs = require('fs');
-var gettextParser = require('gettext-parser');
-var i18nExtract = require('../index.js');
-
-describe('i18nExtract', function() {
-  describe('#extractFromContent()', function() {
-    it('should work when scanning jsx and es5 format', function() {
-      var content = fs.readFileSync('jsx-es5.jsx', 'utf8');
-      var messages = i18nExtract.extractFromContent(content);
+describe('i18nExtract', () => {
+  describe('#extractFromContent()', () => {
+    it('should work when scanning jsx and es5 format', () => {
+      const content = fs.readFileSync('jsx-es5.jsx', 'utf8');
+      const messages = i18nExtract.extractFromContent(content);
       assert.deepEqual([
         'Follow',
         'Followed!',
@@ -19,9 +17,9 @@ describe('i18nExtract', function() {
       ], messages);
     });
 
-    it('should work when scanning jsx and es6 format', function() {
-      var content = fs.readFileSync('jsx-es6.jsx', 'utf8');
-      var messages = i18nExtract.extractFromContent(content);
+    it('should work when scanning jsx and es6 format', () => {
+      const content = fs.readFileSync('jsx-es6.jsx', 'utf8');
+      const messages = i18nExtract.extractFromContent(content);
       assert.deepEqual([
         'Reset',
         'Revert',
@@ -30,9 +28,9 @@ describe('i18nExtract', function() {
       ], messages);
     });
 
-    it('should work when scanning with the marker option', function() {
-      var content = fs.readFileSync('hello.js', 'utf8');
-      var messages = i18nExtract.extractFromContent(content, {
+    it('should work when scanning with the marker option', () => {
+      const content = fs.readFileSync('hello.js', 'utf8');
+      const messages = i18nExtract.extractFromContent(content, {
         marker: '__',
       });
       assert.deepEqual([
@@ -40,18 +38,18 @@ describe('i18nExtract', function() {
       ], messages);
     });
 
-    it('should work with multiple arguments in the i18n function', function() {
-      var content = fs.readFileSync('many-args.js', 'utf8');
-      var messages = i18nExtract.extractFromContent(content);
+    it('should work with multiple arguments in the i18n function', () => {
+      const content = fs.readFileSync('many-args.js', 'utf8');
+      const messages = i18nExtract.extractFromContent(content);
       assert.deepEqual([
         'Hello, {{username}}!',
       ], messages);
     });
   });
 
-  describe('#extractFromFiles()', function() {
-    it('should work when scanning with a glob and a string parameter', function() {
-      var messages = i18nExtract.extractFromFiles('*es5.jsx');
+  describe('#extractFromFiles()', () => {
+    it('should work when scanning with a glob and a string parameter', () => {
+      const messages = i18nExtract.extractFromFiles('*es5.jsx');
       assert.deepEqual([
         'Follow',
         'Followed!',
@@ -61,8 +59,8 @@ describe('i18nExtract', function() {
       ], messages);
     });
 
-    it('should work when scanning with an array as parameter', function() {
-      var messages = i18nExtract.extractFromFiles([
+    it('should work when scanning with an array as parameter', () => {
+      const messages = i18nExtract.extractFromFiles([
         '*es5.jsx',
         'hello.js',
       ]);
@@ -77,15 +75,15 @@ describe('i18nExtract', function() {
     });
   });
 
-  describe('#mergeMessagesWithPO()', function() {
-    it('should output a new po file with 5 merged messages when we give a po file with one outdate message', function() {
-      var output = 'messages2.po';
-      var messages = i18nExtract.extractFromFiles('*es5.jsx');
+  describe('#mergeMessagesWithPO()', () => {
+    it('should output a new po file with 5 merged messages when we give a po file with one outdate message', () => {
+      const output = 'messages2.po';
+      const messages = i18nExtract.extractFromFiles('*es5.jsx');
 
       i18nExtract.mergeMessagesWithPO(messages, 'messages.po', output);
 
-      var poContent = fs.readFileSync(output);
-      var po = gettextParser.po.parse(poContent);
+      const poContent = fs.readFileSync(output);
+      const po = gettextParser.po.parse(poContent);
 
       fs.unlinkSync(output);
 
