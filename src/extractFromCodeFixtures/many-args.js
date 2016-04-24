@@ -4,6 +4,6 @@ const user = {
   username: 'world',
 };
 
-i18n('Hello, {{username}}!', {
+i18n('hello_username', {
   username: user.username,
 });

@@ -14,9 +14,10 @@ function getMessage(node) {
   }
 }
 
-export default function extractFromCode(code, options) {
-  const messages = [];
-  options = options || {};
+export default function extractFromCode(code, options = {}) {
+  const {
+    marker = 'i18n',
+  } = options;
 
   const ast = parse(code, {
     sourceType: 'module',
@@ -40,12 +41,23 @@ export default function extractFromCode(code, options) {
     ],
   });
 
+  const messages = [];
+
   traverse(ast, {
     CallExpression(path) {
-      const callee = path.node.callee;
+      const {
+        node,
+      } = path;
 
-      if (callee.type === 'Identifier' && callee.name === (options.marker || 'i18n')) {
-        const message = getMessage(path.node.arguments[0]);
+      const {
+        callee: {
+          name,
+          type,
+        },
+      } = node;
+
+      if (type === 'Identifier' && name === marker) {
+        const message = getMessage(node.arguments[0]);
 
         if (message) {
           messages.push(message);

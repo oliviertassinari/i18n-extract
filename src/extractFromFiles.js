@@ -14,13 +14,13 @@ export default function extractFromFiles(filenames, options) {
     ];
   }
 
-  let filenamesToScan = [];
+  let toScan = [];
 
   filenames.forEach((filename) => {
-    filenamesToScan = filenamesToScan.concat(glob.sync(filename, {}));
+    toScan = toScan.concat(glob.sync(filename, {}));
   });
 
-  filenamesToScan.forEach((filename) => {
+  toScan.forEach((filename) => {
     const code = fs.readFileSync(filename, 'utf8');
     messages = messages.concat(extractFromCode(code, options));
   });

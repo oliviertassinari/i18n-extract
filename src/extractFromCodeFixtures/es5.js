@@ -1,5 +1,9 @@
-/* eslint-disable */
-
+/* eslint-disable no-var */
+/* eslint-disable prefer-template */
+/* eslint-disable prefer-arrow-callback */
+/* eslint-disable react/prefer-es6-class */
+/* eslint-disable react/prop-types */
+/* eslint-disable no-undef */
 var classNames = require('classnames');
 
 define([
@@ -7,11 +11,13 @@ define([
   'backbone',
   'js/mixins/betelgeuse',
   'jsx/lib/alert',
+  'i18n',
 ], function(
   React,
   Backbone,
   BetelgeuseMixin,
-  Alert
+  Alert,
+  i18n
 ) {
   'use strict';
 
@@ -26,8 +32,8 @@ define([
       return {
         group: {}, // Group object from api
         onClick: null,
-        buttonText: i18n('Follow'),
-        buttonStyle: i18n('Follow'), // Test the uniq filter
+        buttonText: i18n('follow'),
+        buttonStyle: i18n('follow'), // Test the uniq filter
         onToggle: function() {},
         onFinished: function() {},
         silent: false,
@@ -51,7 +57,7 @@ define([
      * When user has followed
      */
     joined: function() {
-      this.app.setAlert(<Alert type="success">{i18n('Followed!')}</Alert>);
+      this.app.setAlert(<Alert type="success">{i18n('followed')}</Alert>);
 
       this.setState({
         changePending: false,
@@ -65,7 +71,7 @@ define([
      * When user has unfollowed
      */
     left: function() {
-      this.app.setAlert(<Alert type="success">{i18n('Unfollowed!')}</Alert>);
+      this.app.setAlert(<Alert type="success">{i18n('unfollowed')}</Alert>);
 
       this.setState({
         changePending: false,
@@ -75,9 +81,7 @@ define([
     /**
      * When this button is clicked lets toggle membership
      */
-    onClick: function() {
-      console.log('onClick');
-
+    handleClick: function() {
       if (this.props.onClick) {
         this.props.onClick();
       } else {
@@ -94,9 +98,17 @@ define([
           changePending: true,
         });
 
-        var change = this.props.isFollowing
-          ? this.ctx.unfollow(this.props.followType, this.props.followIds, this.props.silent).then(this.left).then(this.props.onUpdate)
-          : this.ctx.follow(this.props.followType, this.props.followIds, this.props.silent).then(this.joined).then(this.props.onUpdate);
+        var change = this.props.isFollowing ?
+          this.ctx.unfollow(
+            this.props.followType,
+            this.props.followIds,
+            this.props.silent
+          ).then(this.left).then(this.props.onUpdate) :
+          this.ctx.follow(
+            this.props.followType,
+            this.props.followIds,
+            this.props.silent
+          ).then(this.joined).then(this.props.onUpdate);
 
         change.then(function() {
           this.props.onToggle();
@@ -108,14 +120,14 @@ define([
     /**
      * When the button is hovered
      */
-    onMouseEnter: function() {
+    handleMouseEnter: function() {
       this.setState({hovered: true});
     },
 
     /**
      * When the button is no longer hovered
      */
-    onMouseLeave: function() {
+    handleMouseLeave: function() {
       this.setState({hovered: false});
     },
 
@@ -133,21 +145,24 @@ define([
         'icon--danger': isFollowing && this.state.hovered,
         'icon-plus': !isFollowing,
         'icon-ok': isFollowing && !this.state.hovered,
-        'icon-cancel': isFollowing && this.state.hovered
+        'icon-cancel': isFollowing && this.state.hovered,
       };
 
-      var followingText = this.state.hovered ? i18n('Unfollow') : i18n('Following');
+      var followingText = this.state.hovered ? i18n('unfollow') : i18n('following');
 
-      return <button className={classNames(props.className, classes)} disabled={props.isDisabled} onClick={this.onClick}
-          onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
-          {isFollowing
-            ? followingText
-            : (props.children || props.buttonText)
-          }
-        </button>;
+      return (
+        <button
+          className={classNames(props.className, classes)}
+          disabled={props.isDisabled}
+          onClick={this.handleClick}
+          onMouseEnter={this.handleMouseEnter}
+          onMouseLeave={this.handleMouseLeave}
+        >
+          {isFollowing ? followingText : (props.children || props.buttonText)}
+        </button>
+      );
     },
   });
 
   return FollowButton;
-
 });

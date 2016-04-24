@@ -1,8 +1,9 @@
 import fs from 'fs';
+import path from 'path';
 import gettextParser from 'gettext-parser';
 
 export default function mergeMessagesWithPO(messages, poFileName, outputFileName) {
-  const poContent = fs.readFileSync(poFileName, 'utf8');
+  const poContent = fs.readFileSync(path.join(__dirname, poFileName), 'utf8');
   const po = gettextParser.po.parse(poContent);
 
   const poTransalations = po.translations[''];
