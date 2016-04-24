@@ -37,7 +37,7 @@ const styles = {
 export default class LogMonitor {
   constructor() {
     if (typeof window !== 'undefined') {
-      window.addEventListener('keydown', ::this.handleKeyPress);
+      window.addEventListener('keydown', this.handleKeyPress);
     }
   }
 
@@ -173,7 +173,7 @@ export default class LogMonitor {
           previousState={previousState}
           collapsed={skippedActions[i]}
           error={error}
-          onActionClick={::this.handleToggleAction}
+          onActionClick={this.handleToggleAction}
         />
       );
     }
@@ -181,20 +181,20 @@ export default class LogMonitor {
     return (
       <div style={{...styles.container, backgroundColor: theme.base00}}>
         <div style={{...styles.buttonBar, borderColor: theme.base02}}>
-          <LogMonitorButton theme={theme} onClick={::this.handleReset}>
+          <LogMonitorButton theme={theme} onClick={this.handleReset}>
             {i18n('reset')}
           </LogMonitorButton>
-          <LogMonitorButton theme={theme} onClick={::this.handleRollback} enabled={computedStates.length}>
+          <LogMonitorButton theme={theme} onClick={this.handleRollback} enabled={computedStates.length}>
             {i18n('revert')}
           </LogMonitorButton>
           <LogMonitorButton
             theme={theme}
-            onClick={::this.handleSweep}
+            onClick={this.handleSweep}
             enabled={Object.keys(skippedActions).some((key) => skippedActions[key])}
           >
             {i18n('sweep')}
           </LogMonitorButton>
-          <LogMonitorButton theme={theme} onClick={::this.handleCommit} enabled={computedStates.length > 1}>
+          <LogMonitorButton theme={theme} onClick={this.handleCommit} enabled={computedStates.length > 1}>
             {i18n('commit')}
           </LogMonitorButton>
         </div>

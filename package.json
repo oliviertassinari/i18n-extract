@@ -1,6 +1,6 @@
 {
   "name": "i18n-extract",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Manage localization of ES6 code with static analysis",
   "main": "lib/index.js",
   "scripts": {
@@ -35,6 +35,7 @@
     "babel-eslint": "^6.0.3",
     "babel-preset-es2015": "^6.6.0",
     "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-1": "^6.5.0",
     "chai": "^3.0.0",
     "eslint": "^2.8.0",
     "eslint-plugin-react": "^5.0.1",
