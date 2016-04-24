@@ -1,7 +1,7 @@
 import {assert} from 'chai';
 import fs from 'fs';
 import gettextParser from 'gettext-parser';
-import i18nExtract from '../index.js';
+import i18nExtract from '../src/index.js';
 
 describe('i18nExtract', () => {
   describe('#extractFromContent()', () => {
