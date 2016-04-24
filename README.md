@@ -31,33 +31,33 @@ E.g. This module works well in conjunction with:
 
 ### extractFromCode(code, [options])
 
-Parse the `code` to extract the argument of calls of i18n(`message`).
+Parse the `code` to extract the argument of calls of i18n(`key`).
 
 - `code` should be a string.
-- Return an array containing messages used.
+- Return an array containing keys used.
 
 ##### Example
 
 ```js
 import {extractFromCode} from 'i18n-extract';
-const messages = extractFromCode("const followMe = i18n('b2b.' + 'follow');", {
+const keys = extractFromCode("const followMe = i18n('b2b.' + 'follow');", {
   marker: 'i18n',
 });
-// messages = ['b2b.follow']
+// keys = ['b2b.follow']
 ```
 
 ### extractFromFiles(files, [options])
 
-Parse the `files` to extract the argument of calls of i18n(`message`).
+Parse the `files` to extract the argument of calls of i18n(`key`).
 
 - `files` can be either an array of strings or a string. You can also use a glob.
-- Return an array containing messages used in the source code.
+- Return an array containing keys used in the source code.
 
 ##### Example
 
 ```js
 import {extractFromFiles} from 'i18n-extract';
-const messages = extractFromFiles([
+const keys = extractFromFiles([
   '*.jsx',
   '*.js',
 ], {
@@ -68,6 +68,53 @@ const messages = extractFromFiles([
 ### Options
 
 - `marker`: The name of the internationalized string marker function. Defaults to `i18n`.
+
+### findMissing(locale, keysUsed)
+
+- `locale` should be a object containing the translations.
+- `keysUsed` should be an array. Containes the keys used in the source code.
+It can be retrieve with `extractFromFiles` our `extractFromCode`.
+- Return a report.
+
+##### Example
+
+```js
+import {findMissing} from 'i18n-extract';
+const missing = findMissing({
+  key1: 'key 1',
+}, ['key1', 'key2']);
+
+/**
+ * missing = [{
+ *   type: 'MISSING',
+ *   key: 'key2',
+ * }];
+ */
+```
+
+### findUnused(locale, keysUsed)
+
+- `locale` should be a object containing the translations.
+- `keysUsed` should be an array. Containes the keys used in the source code.
+It can be retrieve with `extractFromFiles` our `extractFromCode`.
+- Return a report.
+
+##### Example
+
+```js
+import {findUnused} from 'i18n-extract';
+const unused = findUnused({
+  key1: 'key 1',
+  key2: 'key 2',
+}, ['key1']);
+
+/**
+ * unused = [{
+ *   type: 'UNUSED',
+ *   key: 'key2',
+ * }];
+ */
+```
 
 ### mergeMessagesWithPO(messages, poInput, poOutput)
 
@@ -88,11 +135,11 @@ const messages = ['Message 1', 'Message 2'];
 mergeMessagesWithPO(messages, 'messages.po', 'messages.output.po');
 
 /**
- Will output :
- > messages.output.po has 812 messages.
- > We have added 7 messages.
- > We have removed 3 messages.
-*/
+ * Will output :
+ * > messages.output.po has 812 messages.
+ * > We have added 7 messages.
+ * > We have removed 3 messages.
+ */
 ```
 
 ## License

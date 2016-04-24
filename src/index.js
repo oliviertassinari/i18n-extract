@@ -6,3 +6,9 @@ export {extractFromFiles};
 
 import extractFromFiles from './extractFromFiles';
 export {mergeMessagesWithPO};
+
+import findUnused from './findUnused';
+export {findUnused};
+
+import findMissing from './findMissing';
+export {findMissing};

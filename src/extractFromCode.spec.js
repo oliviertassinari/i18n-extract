@@ -8,8 +8,8 @@ function getCode(name) {
 }
 
 describe('#extractFromCode()', () => {
-  it('should return the right messages with ES5 code', () => {
-    const messages = extractFromCode(getCode('es5.js'));
+  it('should return the right keys with ES5 code', () => {
+    const keys = extractFromCode(getCode('es5.js'));
 
     assert.deepEqual([
       'follow',
@@ -17,43 +17,43 @@ describe('#extractFromCode()', () => {
       'unfollowed',
       'unfollow',
       'following',
-    ], messages, 'Should work with ES5 code.');
+    ], keys, 'Should work with ES5 code.');
   });
 
-  it('should return the right messages with ES6 code', () => {
-    const messages = extractFromCode(getCode('es6.js'));
+  it('should return the right keys with ES6 code', () => {
+    const keys = extractFromCode(getCode('es6.js'));
 
     assert.deepEqual([
       'reset',
       'revert',
       'sweep',
       'commit',
-    ], messages, 'Should work with ES6 code.');
+    ], keys, 'Should work with ES6 code.');
   });
 
-  it('should return the right messages with a custom marker', () => {
-    const messages = extractFromCode(getCode('marker.js'), {
+  it('should return the right keys with a custom marker', () => {
+    const keys = extractFromCode(getCode('marker.js'), {
       marker: '__',
     });
 
     assert.deepEqual([
       'this_is_a_custom_marker',
-    ], messages, 'Should take into account the marker option.');
+    ], keys, 'Should take into account the marker option.');
   });
 
-  it('should return the right messages with multiple arguments', () => {
-    const messages = extractFromCode(getCode('many-args.js'));
+  it('should return the right keys with multiple arguments', () => {
+    const keys = extractFromCode(getCode('many-args.js'));
 
     assert.deepEqual([
       'hello_username',
-    ], messages, 'The second argument shoudn\'t have any impact.');
+    ], keys, 'The second argument shoudn\'t have any impact.');
   });
 
   it('should deduplicate the keys', () => {
-    const messages = extractFromCode(getCode('duplicated.js'));
+    const keys = extractFromCode(getCode('duplicated.js'));
 
     assert.deepEqual([
       'key',
-    ], messages, 'Should return only one element.');
+    ], keys, 'Should return only one element.');
   });
 });

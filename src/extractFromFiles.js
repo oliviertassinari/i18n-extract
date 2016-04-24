@@ -5,7 +5,7 @@ import {uniq} from './utils';
 import extractFromCode from './extractFromCode';
 
 export default function extractFromFiles(filenames, options) {
-  let messages = [];
+  let keys = [];
 
   // filenames should be an array
   if (typeof filenames === 'string') {
@@ -22,8 +22,8 @@ export default function extractFromFiles(filenames, options) {
 
   toScan.forEach((filename) => {
     const code = fs.readFileSync(filename, 'utf8');
-    messages = messages.concat(extractFromCode(code, options));
+    keys = keys.concat(extractFromCode(code, options));
   });
 
-  return uniq(messages);
+  return uniq(keys);
 }

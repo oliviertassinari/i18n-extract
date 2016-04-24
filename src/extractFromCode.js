@@ -3,13 +3,13 @@ import traverse from 'babel-traverse';
 
 import {uniq} from './utils';
 
-function getMessage(node) {
+function getKey(node) {
   if (node.type === 'StringLiteral') {
     return node.value;
   } else if (node.type === 'BinaryExpression' && node.operator === '+') {
-    return getMessage(node.left) + getMessage(node.right);
+    return getKey(node.left) + getKey(node.right);
   } else {
-    console.warn(`Unsupported node : ${node}`);
+    console.warn(`Unsupported node: ${node}`);
     return null;
   }
 }
@@ -41,7 +41,7 @@ export default function extractFromCode(code, options = {}) {
     ],
   });
 
-  const messages = [];
+  const keys = [];
 
   traverse(ast, {
     CallExpression(path) {
@@ -57,14 +57,14 @@ export default function extractFromCode(code, options = {}) {
       } = node;
 
       if (type === 'Identifier' && name === marker) {
-        const message = getMessage(node.arguments[0]);
+        const key = getKey(node.arguments[0]);
 
-        if (message) {
-          messages.push(message);
+        if (key) {
+          keys.push(key);
         }
       }
     },
   });
 
-  return uniq(messages);
+  return uniq(keys);
 }

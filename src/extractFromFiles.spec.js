@@ -3,17 +3,17 @@ import extractFromFiles from './extractFromFiles.js';
 
 describe('#extractFromFiles()', () => {
   it('should work when scanning with a glob and a string parameter', () => {
-    const messages = extractFromFiles('src/extractFromFilesFixture/*View.js');
+    const keys = extractFromFiles('src/extractFromFilesFixture/*View.js');
 
     assert.deepEqual([
       'key1',
       'key2',
       'key3',
-    ], messages, 'Should find all the key without duplication');
+    ], keys, 'Should find all the key without duplication');
   });
 
   it('should work when scanning with an array as parameter', () => {
-    const messages = extractFromFiles([
+    const keys = extractFromFiles([
       'src/extractFromFilesFixture/*.jsx',
       'src/extractFromFilesFixture/*.js',
     ]);
@@ -23,6 +23,6 @@ describe('#extractFromFiles()', () => {
       'key4',
       'key1',
       'key2',
-    ], messages, 'Should work with an array as first parameter');
+    ], keys, 'Should work with an array as first parameter');
   });
 });
