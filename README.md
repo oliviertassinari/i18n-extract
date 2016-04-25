@@ -21,7 +21,7 @@ This module analyses code statically for key usages, such as `i18n.t('some.key')
 
 - Report keys that are missing
 - Report keys that are unused.
-- Report keys that are higly duplicated.
+- Report keys that are highly duplicated.
 
 E.g. This module works well in conjunction with:
 - [polyglot.js](https://github.com/airbnb/polyglot.js) (`marker: 'polyglot.t',`)
