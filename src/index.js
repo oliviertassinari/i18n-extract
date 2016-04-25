@@ -12,3 +12,6 @@ export {findUnused};
 
 import findMissing from './findMissing';
 export {findMissing};
+
+import flatten from './flatten';
+export {flatten};
