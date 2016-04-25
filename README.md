@@ -71,6 +71,8 @@ const keys = extractFromFiles([
 
 ### findMissing(locale, keysUsed)
 
+Report the missing keys. Those keys should probably be translated.
+
 - `locale` should be a object containing the translations.
 - `keysUsed` should be an array. Containes the keys used in the source code.
 It can be retrieve with `extractFromFiles` our `extractFromCode`.
@@ -94,6 +96,8 @@ const missing = findMissing({
 
 ### findUnused(locale, keysUsed)
 
+Report the unused key. Those keys should probably be removed.
+
 - `locale` should be a object containing the translations.
 - `keysUsed` should be an array. Containes the keys used in the source code.
 It can be retrieve with `extractFromFiles` our `extractFromCode`.
@@ -113,6 +117,35 @@ const unused = findUnused({
  *   type: 'UNUSED',
  *   key: 'key2',
  * }];
+ */
+```
+
+### flatten(object)
+
+Flatten the object.
+
+- `object` should be a object.
+
+##### Example
+
+```js
+import {flatten} from 'i18n-extract';
+const flattened = flatten({
+  key2: 'Key 2',
+  key4: {
+    key41: 'Key 4.1',
+    key42: {
+      key421: 'Key 4.2.1',
+    },
+  },
+});
+
+/**
+ * flattened = {
+ *   key2: 'Key 2',
+ *   'key4.key41': 'Key 4.1',
+ *   'key4.key42.key421': 'Key 4.2.1',
+ * };
  */
 ```
 
