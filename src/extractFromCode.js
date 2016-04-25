@@ -56,7 +56,8 @@ export default function extractFromCode(code, options = {}) {
         },
       } = node;
 
-      if (type === 'Identifier' && name === marker) {
+      if ((type === 'Identifier' && name === marker) ||
+        path.get('callee').matchesPattern(marker)) {
         const key = getKey(node.arguments[0]);
 
         if (key) {

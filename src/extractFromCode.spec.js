@@ -41,6 +41,16 @@ describe('#extractFromCode()', () => {
     ], keys, 'Should take into account the marker option.');
   });
 
+  it('should return the right keys with a composed custom marker', () => {
+    const keys = extractFromCode(getCode('markerComposed.js'), {
+      marker: 'polyglot.t',
+    });
+
+    assert.deepEqual([
+      'this_is_a_custom_marker',
+    ], keys, 'Should take into account the marker option.');
+  });
+
   it('should return the right keys with multiple arguments', () => {
     const keys = extractFromCode(getCode('many-args.js'));
 

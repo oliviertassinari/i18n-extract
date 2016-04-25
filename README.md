@@ -24,8 +24,8 @@ This module analyses code statically for key usages, such as `i18n.t('some.key')
 - Report keys that are higly duplicated.
 
 E.g. This module works well in conjunction with:
-- [polyglot.js](https://github.com/airbnb/polyglot.js)
-- webpack and his localisation plugin: [i18n-webpack-plugin](https://github.com/webpack/i18n-webpack-plugin)
+- [polyglot.js](https://github.com/airbnb/polyglot.js) (`marker: 'polyglot.t',`)
+- webpack and his localisation plugin: [i18n-webpack-plugin](https://github.com/webpack/i18n-webpack-plugin) (`marker: 'i18n',`)
 
 ## API
 
