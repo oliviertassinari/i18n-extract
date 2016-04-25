@@ -30,6 +30,10 @@
     "gettext-parser": "^1.1.1",
     "glob": "^7.0.3"
   },
+  "files": [
+    "lib",
+    "src"
+  ],
   "devDependencies": {
     "babel-cli": "^6.7.7",
     "babel-eslint": "^6.0.3",
