@@ -1,6 +1,6 @@
 {
   "name": "i18n-extract",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Manage localization of ES6 code with static analysis",
   "main": "lib/index.js",
   "scripts": {
