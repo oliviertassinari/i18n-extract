@@ -1,6 +1,6 @@
 # i18n extract
 
-> Manage localization of ES6 code with static analysis
+> Manage localization with static analysis
 
 [![npm version](https://img.shields.io/npm/v/i18n-extract.svg?style=flat-square)](https://www.npmjs.com/package/i18n-extract)
 [![npm downloads](https://img.shields.io/npm/dm/i18n-extract.svg?style=flat-square)](https://www.npmjs.com/package/i18n-extract)
