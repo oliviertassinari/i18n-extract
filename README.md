@@ -122,7 +122,8 @@ const unused = findUnused({
 
 ### findDuplicated(locale, keysUsed, options)
 
-Report the unused key. Those keys should probably be removed.
+Report the duplicated key. Those keys should probably be mutualized.
+The default `threshold` is 1, it will report any duplicated translations.
 
 - `locale` should be a object containing the translations.
 - `keysUsed` should be an array. Containes the keys used in the source code.
