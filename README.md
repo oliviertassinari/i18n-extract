@@ -120,6 +120,38 @@ const unused = findUnused({
  */
 ```
 
+### findDuplicated(locale, keysUsed, options)
+
+Report the unused key. Those keys should probably be removed.
+
+- `locale` should be a object containing the translations.
+- `keysUsed` should be an array. Containes the keys used in the source code.
+It can be retrieve with `extractFromFiles` our `extractFromCode`.
+- `options` should be an object. You can provide a `threshold` property to change the number of duplicated value before it's added to the report.
+- Return a report.
+
+##### Example
+
+```js
+import {findDuplicated} from 'i18n-extract';
+const duplicated = findDuplicated({
+  key1: 'Key 1',
+  key2: 'Key 2',
+  key3: 'Key 2',
+});
+
+/**
+ * unused = [{
+ *   type: 'DUPLICATED',
+ *   keys: [
+ *     'key2',
+ *     'key3',
+ *   ],
+ *   value: 'Key 2'
+ * }]
+ */
+```
+
 ### flatten(object)
 
 Flatten the object.
