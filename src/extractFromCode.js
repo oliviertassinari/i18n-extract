@@ -9,9 +9,17 @@ function getKey(node) {
   } else if (node.type === 'BinaryExpression' && node.operator === '+') {
     return getKey(node.left) + getKey(node.right);
   } else if (node.type === 'TemplateLiteral') {
-    return node.quasis[0].value.cooked;
-  } else if (node.type === 'CallExpression') {
-    return null; // We can't extract anything.
+    return node.quasis.reduce((key, quasi) => {
+      const cooked = quasi.value.cooked;
+
+      if (key !== '' && cooked !== '') {
+        return `${key}*${cooked}`;
+      }
+
+      return key + cooked;
+    }, '');
+  } else if (node.type === 'CallExpression' || node.type === 'Identifier') {
+    return '*'; // We can't extract anything.
   } else {
     console.warn(`Unsupported node: ${node.type}`);
     return null;

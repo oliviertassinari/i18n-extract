@@ -78,6 +78,23 @@ describe('#extractFromCode()', () => {
   it('should return the right key with a function call', () => {
     const keys = extractFromCode(getCode('function.js'));
 
-    assert.deepEqual([], keys, 'Should not return any key.');
+    assert.deepEqual([
+      '*',
+    ], keys, 'Should return one key.');
+  });
+
+  it('should return the right key with a function call', () => {
+    const keys = extractFromCode(getCode('dynamic.js'));
+
+    assert.deepEqual([
+      'key',
+      'key.',
+      'key.*.bar',
+      'key.*bar',
+      'key*',
+      'key.*',
+      'key*.bar',
+      'key*bar',
+    ], keys, 'Should not return any key.');
   });
 });
