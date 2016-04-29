@@ -64,6 +64,20 @@ describe('#extractFromCode()', () => {
 
     assert.deepEqual([
       'key',
-    ], keys, 'Should return only one element.');
+    ], keys, 'Should return only one key.');
+  });
+
+  it('should return the right key with literal template', () => {
+    const keys = extractFromCode(getCode('template.js'));
+
+    assert.deepEqual([
+      'key',
+    ], keys, 'Should return only one key.');
+  });
+
+  it('should return the right key with a function call', () => {
+    const keys = extractFromCode(getCode('function.js'));
+
+    assert.deepEqual([], keys, 'Should not return any key.');
   });
 });

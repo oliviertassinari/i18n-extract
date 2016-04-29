@@ -8,8 +8,12 @@ function getKey(node) {
     return node.value;
   } else if (node.type === 'BinaryExpression' && node.operator === '+') {
     return getKey(node.left) + getKey(node.right);
+  } else if (node.type === 'TemplateLiteral') {
+    return node.quasis[0].value.cooked;
+  } else if (node.type === 'CallExpression') {
+    return null; // We can't extract anything.
   } else {
-    console.warn(`Unsupported node: ${node}`);
+    console.warn(`Unsupported node: ${node.type}`);
     return null;
   }
 }
