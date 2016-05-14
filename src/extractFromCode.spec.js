@@ -103,4 +103,15 @@ describe('#extractFromCode()', () => {
       ], keys, 'Should return the right key.');
     });
   });
+
+  describe('comment', () => {
+    it('should return the keys when added as a comment', () => {
+      const keys = extractFromCode(getCode('comment.js'));
+
+      assert.deepEqual([
+        'foo.bar1',
+        'foo.bar2',
+      ], keys, 'Should return the good keys.');
+    });
+  });
 });
