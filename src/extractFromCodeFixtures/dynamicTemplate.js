@@ -4,12 +4,14 @@ import i18n from 'i18n';
 
 const foo = 'bar';
 
-i18n(`key${foo}`);
+// Tail position
 i18n(`key.${foo}`);
-i18n(`key.${foo}.bar`);
-i18n(`key.${foo}bar`);
 
-i18n('key' + foo);
-i18n('key.' + foo);
-i18n('key' + foo + '.bar');
-i18n('key' + foo + 'bar');
+// Middle position
+i18n(`key.${foo}.bar`);
+
+// Start position
+i18n(`${foo}.bar`);
+
+// All
+i18n(`${foo}`);

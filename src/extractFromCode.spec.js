@@ -83,18 +83,24 @@ describe('#extractFromCode()', () => {
     ], keys, 'Should return one key.');
   });
 
-  it('should return the right key with a function call', () => {
-    const keys = extractFromCode(getCode('dynamic.js'));
+  describe('dynamic', () => {
+    let keys;
 
-    assert.deepEqual([
-      'key',
-      'key.',
-      'key.*.bar',
-      'key.*bar',
-      'key*',
-      'key.*',
-      'key*.bar',
-      'key*bar',
-    ], keys, 'Should not return any key.');
+    it('should return the right key with a concat', () => {
+      keys = extractFromCode(getCode('dynamicConcat.js'));
+    });
+
+    it('should return the right key with a template', () => {
+      keys = extractFromCode(getCode('dynamicTemplate.js'));
+    });
+
+    afterEach(() => {
+      assert.deepEqual([
+        'key.*',
+        'key.*.bar',
+        '*.bar',
+        '*',
+      ], keys, 'Should return the right key.');
+    });
   });
 });
