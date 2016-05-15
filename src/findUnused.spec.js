@@ -16,13 +16,39 @@ describe('#findUnused()', () => {
       const unused = findUnused({
         key1: 'Key 1',
         key2: 'Key 2',
-        key4: 'Key 4',
+        key3: 'Key 3',
       }, ['key1', 'key2']);
 
       assert.deepEqual([
         {
           type: 'UNUSED',
-          key: 'key4',
+          key: 'key3',
+        },
+      ], unused, 'Should report one unused key.');
+    });
+  });
+
+  describe('dynamic keys', () => {
+    it('should work with a simple case', () => {
+      const unused = findUnused({
+        'foo.key1': 'Key 1',
+        'foo.key2': 'Key 2',
+      }, ['foo.*']);
+
+      assert.deepEqual([], unused, 'Should report zero unused key.');
+    });
+
+    it('should work with a simple case', () => {
+      const unused = findUnused({
+        'foo.key1': 'Key 1',
+        'foo.key2': 'Key 2',
+        key3: 'Key 3',
+      }, ['foo.*']);
+
+      assert.deepEqual([
+        {
+          type: 'UNUSED',
+          key: 'key3',
         },
       ], unused, 'Should report one unused key.');
     });

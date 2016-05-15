@@ -1,28 +1,27 @@
 const MISSING = 'MISSING';
 
-function isMissing(key, locale) {
+function isMissing(locale, keyUsed) {
   // Dynamic key
-  if (key.includes('*')) {
-    const regExp = new RegExp(key.replace('*', '(.+)'));
+  if (keyUsed.includes('*')) {
+    const regExp = new RegExp(keyUsed.replace('*', '(.+)'));
 
     return Object.keys(locale)
-      .sort() // Not stable sort
       .every((localeKey) => {
         return regExp.exec(localeKey) === null;
       });
   } else {
-    return !locale[key];
+    return !locale[keyUsed];
   }
 }
 
 export default function findMissing(locale, keysUsed) {
   const reports = [];
 
-  keysUsed.forEach((key) => {
-    if (isMissing(key, locale)) {
+  keysUsed.forEach((keyUsed) => {
+    if (isMissing(locale, keyUsed)) {
       reports.push({
         type: MISSING,
-        key: key,
+        key: keyUsed,
       });
     }
   });

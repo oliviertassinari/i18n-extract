@@ -21,8 +21,6 @@ reports = reports.concat(findUnused(frLocaleFlattened, keys));
 reports = reports.concat(findDuplicated(frLocaleFlattened, keys));
 
 if (reports.length > 0) {
-  console.log(reports);
-  process.exit(1);
-} else {
-  process.exit(0);
+  console.log(reports); // eslint-disable-line no-console
+  throw new Error('There is some issues with the i18n keys');
 }

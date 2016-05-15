@@ -27,6 +27,30 @@ E.g. This module works well in conjunction with:
 - [polyglot.js](https://github.com/airbnb/polyglot.js) (`marker: 'polyglot.t',`)
 - webpack and his localisation plugin: [i18n-webpack-plugin](https://github.com/webpack/i18n-webpack-plugin) (`marker: 'i18n',`)
 
+
+## Supported keys
+
+- static:
+```js
+i18n('key.static')
+```
+- string concatenation:
+```js
+i18n('key.' + 'concat')
+```
+- template string:
+```js
+i18n(`key.template`)
+```
+- dynamic:
+```js
+i18n(`key.${dynamic}`)
+```
+- comment:
+```js
+/* i18n-extract key.comment */
+```
+
 ## API
 
 ### extractFromCode(code, [options])
@@ -40,7 +64,7 @@ Parse the `code` to extract the argument of calls of i18n(`key`).
 
 ```js
 import {extractFromCode} from 'i18n-extract';
-const keys = extractFromCode("const followMe = i18n('b2b.' + 'follow');", {
+const keys = extractFromCode("const followMe = i18n('b2b.follow');", {
   marker: 'i18n',
 });
 // keys = ['b2b.follow']
