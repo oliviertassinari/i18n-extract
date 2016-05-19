@@ -52,5 +52,18 @@ describe('#findUnused()', () => {
         },
       ], unused, 'Should report one unused key.');
     });
+
+    it('should do an exact match even with dynamic keys', () => {
+      const missing = findUnused({
+        'bar.key.foo': 'Key 1',
+      }, ['key.*']);
+
+      assert.deepEqual([
+        {
+          key: 'bar.key.foo',
+          type: 'UNUSED',
+        },
+      ], missing, 'Should report one missing key.');
+    });
   });
 });
