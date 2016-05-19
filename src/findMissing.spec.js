@@ -52,6 +52,19 @@ describe('#findMissing()', () => {
         },
       ], missing, 'Should report three missing key.');
     });
+
+    it('should do an exact match even with dynamic keys', () => {
+      const missing = findMissing({
+        'bar.key.foo': 'Key 1',
+      }, ['key.*']);
+
+      assert.deepEqual([
+        {
+          key: 'key.*',
+          type: 'MISSING',
+        },
+      ], missing, 'Should report one missing key.');
+    });
   });
 });
 
