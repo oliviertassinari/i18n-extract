@@ -18,3 +18,6 @@ export {findDuplicated};
 
 import flatten from './flatten';
 export {flatten};
+
+import forbidDynamic from './forbidDynamic';
+export {forbidDynamic};

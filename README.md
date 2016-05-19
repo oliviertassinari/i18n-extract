@@ -118,6 +118,8 @@ const missing = findMissing({
  */
 ```
 
+## Plugins
+
 ### findUnused(locale, keysUsed)
 
 Report the unused key. Those keys should probably be removed.
@@ -172,8 +174,31 @@ const duplicated = findDuplicated({
  *     'key2',
  *     'key3',
  *   ],
- *   value: 'Key 2'
- * }]
+ *   value: 'Key 2',
+ * }];
+ */
+```
+
+### forbidDynamic(locale, keysUsed)
+
+Report any dynamic key. It's arguably more dangerous to use dynamic key. They may break.
+
+- `locale` should be a object containing the translations.
+- `keysUsed` should be an array. Containes the keys used in the source code.
+It can be retrieve with `extractFromFiles` our `extractFromCode`.
+- Return a report.
+
+##### Example
+
+```js
+import {forbidDynamic} from 'i18n-extract';
+const forbidDynamic = forbidDynamic({}, ['key.*']);
+
+/**
+ * forbidDynamic = [{
+ *   type: 'FORBID_DYNAMIC',
+ *   key: 'key.*',
+ * }];
  */
 ```
 
