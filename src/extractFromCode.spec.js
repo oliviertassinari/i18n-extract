@@ -83,6 +83,14 @@ describe('#extractFromCode()', () => {
         '*',
       ], keys, 'Should return one key.');
     });
+
+    it('should return the right key with a member expression', () => {
+      const keys = extractFromCode(getCode('memberExpression.js'));
+
+      assert.deepEqual([
+        '*',
+      ], keys, 'Should return one key.');
+    });
   });
 
   describe('dynamic keys', () => {

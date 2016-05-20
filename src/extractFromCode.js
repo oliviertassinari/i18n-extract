@@ -3,6 +3,12 @@ import traverse from 'babel-traverse';
 
 import {uniq} from './utils';
 
+const noInformationTypes = [
+  'CallExpression',
+  'Identifier',
+  'MemberExpression',
+];
+
 function getKey(node) {
   if (node.type === 'StringLiteral') {
     return node.value;
@@ -12,7 +18,7 @@ function getKey(node) {
     return node.quasis
       .map((quasi) => quasi.value.cooked)
       .join('*');
-  } else if (node.type === 'CallExpression' || node.type === 'Identifier') {
+  } else if (noInformationTypes.includes(node.type)) {
     return '*'; // We can't extract anything.
   } else {
     console.warn(`Unsupported node: ${node.type}`);
