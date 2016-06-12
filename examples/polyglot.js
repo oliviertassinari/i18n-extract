@@ -22,5 +22,17 @@ reports = reports.concat(findDuplicated(frLocaleFlattened, keys));
 
 if (reports.length > 0) {
   console.log(reports); // eslint-disable-line no-console
+  /**
+   * Could output something like:
+   * [
+   *   {type: 'MISSING', key: 'paid_by_name'},
+   *   {type: 'UNUSED', key: 'description_short'},
+   *   {
+   *     type: 'DUPLICATED',
+   *     keys: ['description', 'description_short'],
+   *     value: 'Description'
+   *   }
+   * ]
+   */
   throw new Error('There is some issues with the i18n keys');
 }
