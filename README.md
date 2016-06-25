@@ -1,6 +1,6 @@
-# i18n extract
+# i18n-extract
 
-> Manage localization with static analysis
+> Manage localization with static analysis.
 
 [![npm version](https://img.shields.io/npm/v/i18n-extract.svg?style=flat-square)](https://www.npmjs.com/package/i18n-extract)
 [![npm downloads](https://img.shields.io/npm/dm/i18n-extract.svg?style=flat-square)](https://www.npmjs.com/package/i18n-extract)
@@ -12,10 +12,10 @@
 ## Installation
 
 ```sh
-npm install i18n-extract
+npm install --save-dev i18n-extract
 ```
 
-## Use case
+## The problem solved
 
 This module analyses code statically for key usages, such as `i18n.t('some.key')`, in order to:
 
