@@ -42,7 +42,7 @@
     "babel-preset-stage-1": "^6.5.0",
     "chai": "^3.0.0",
     "eslint": "^3.0.0",
-    "eslint-plugin-react": "^5.0.1",
+    "eslint-plugin-react": "^6.0.0",
     "mocha": "^3.0.0"
   },
   "bugs": {
