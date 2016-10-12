@@ -2,21 +2,32 @@
 
 import { assert } from 'chai';
 import fs from 'fs';
+import path from 'path';
 import gettextParser from 'gettext-parser';
 import extractFromFiles from './extractFromFiles.js';
 import mergeMessagesWithPO from './mergeMessagesWithPO.js';
 
 describe('#mergeMessagesWithPO()', () => {
-  it('should output a new po file with merged messages when we give a po file outdated message', () => {
-    const output = 'messages2.po';
-    const messages = extractFromFiles('src/mergeMessagesWithPOFixtures/input.js');
+  const output = 'messages2.po';
+  let messages;
 
+  beforeEach(() => {
+    messages = extractFromFiles('src/mergeMessagesWithPOFixtures/input.js');
+  });
+
+  afterEach(() => {
+    fs.unlinkSync(output);
+  });
+
+  it('should not crash when the path is absolute', () => {
+    mergeMessagesWithPO(messages, path.join(__dirname, 'mergeMessagesWithPOFixtures/messages.po'), output);
+  });
+
+  it('should output a new po file with merged messages when we give a po file outdated message', () => {
     mergeMessagesWithPO(messages, 'mergeMessagesWithPOFixtures/messages.po', output);
 
     const poContent = fs.readFileSync(output);
     const po = gettextParser.po.parse(poContent);
-
-    fs.unlinkSync(output);
 
     assert.deepEqual(po, {
       charset: 'utf-8',
