@@ -1,121 +1,71 @@
 module.exports = {
-  parser: 'babel-eslint',
+  // So parent files don't get applied
   root: true,
   env: {
+    es6: true,
     browser: true,
     node: true,
-    mocha: true,
-    es6: true,
   },
-  'plugins': [
-    'react',
+  extends: 'airbnb',
+  parser: 'babel-eslint',
+  parserOptions: {
+    ecmaVersion: 7,
+    sourceType: 'module',
+  },
+  plugins: [
+    'babel',
+    'mocha'
   ],
-  ecmaFeatures: {
-    jsx: true,
-  },
-  extends: 'eslint:recommended',
   rules: {
-    // Errors
-    'array-bracket-spacing': ['error', 'never'],
-    'arrow-spacing': 'error',
-    'arrow-parens': 'error',
-    'block-spacing': ['error', 'always'],
-    'brace-style': 'error',
-    'comma-dangle': ['error', 'always-multiline'],
-    'comma-style': ['error', 'last'],
-    'comma-spacing': ['error', {before: false, after: true}],
-    'computed-property-spacing': ['error', 'never'],
+    'array-bracket-spacing': 'off', // use babel plugin rule
+    'arrow-body-style': 'off',
+    'arrow-parens': ['error', 'always'], // airbnb use as-needed
     'consistent-this': ['error', 'self'],
-    'consistent-return': 'error',
-    'dot-notation': 'error',
-    'dot-location': ['error', 'property'],
-    'eqeqeq': ['error', 'smart'],
-    'eol-last': 'error',
-    'indent': ['error', 2, {SwitchCase: 1}],
-    'jsx-quotes': ['error', 'prefer-double'],
-    'key-spacing': 'error',
-    'max-len': ['error', 120, 4],
-    'new-cap': ['error', {capIsNew: true, newIsCap: true}],
-    'no-unused-expressions': 'error',
-    'no-unused-vars': 'error',
-    'no-shadow': 'error',
-    'no-spaced-func': 'error',
-    'no-multiple-empty-lines': 'error',
-    'no-multi-spaces': 'error',
-    'no-undef': 'error',
-    'no-empty-pattern': 'error',
-    'no-dupe-keys': 'error',
-    'no-dupe-args': 'error',
-    'no-duplicate-case': 'error',
-    'no-cond-assign': 'error',
-    'no-extra-semi': 'error',
-    'no-extra-boolean-cast': 'error',
-    'no-trailing-spaces': 'error',
-    'no-unreachable': 'error',
-    'no-unneeded-ternary': 'error',
-    'no-var': 'error',
-    'object-curly-spacing': ['error', 'never'],
-    'one-var': ['error', 'never'],
-    'operator-linebreak': ['error', 'after'],
-    'padded-blocks': ['error', 'never'],
-    'prefer-arrow-callback': 'error',
-    'prefer-const': 'error',
-    'prefer-template': 'error',
-    'quotes': ['error', 'single', 'avoid-escape'],
-    'semi': ['error', 'always'],
-    'keyword-spacing': 'error',
-    'space-before-blocks': ['error', 'always'],
-    'space-before-function-paren': ['error', 'never'],
-    'space-infix-ops': 'error',
-    'space-unary-ops': ['error', { words: true, nonwords: false }],
-    'spaced-comment': 'error',
-    'yoda': 'error',
+    'max-len': ['error', 110], // airbnb use 100, wishlist, one day
+    'no-console': 'error', // airbnb is using warn
+    'no-param-reassign': 'off',
+    'no-prototype-builtins': 'off',
+    'object-curly-spacing': 'off', // use babel plugin rule
+    'operator-linebreak': ['error', 'after'], // aibnb is disabling this rule
+    'babel/object-curly-spacing': ['error', 'always'],
+    'babel/array-bracket-spacing': ['error', 'never'],
+    'import/no-unresolved': 'off',
+    'import/no-named-as-default': 'off',
+    'import/extensions': 'off',
+    'import/no-extraneous-dependencies': 'off',
+    'import/prefer-default-export': 'off',
+    'react/jsx-handler-names': ['error', { // airbnb is disabling this rule
+      eventHandlerPrefix: 'handle',
+      eventHandlerPropPrefix: 'on',
+    }],
+    'react/forbid-prop-types': 'off', // airbnb use error
+    'react/jsx-filename-extension': ['error', {extensions: ['.js']}], // airbnb is using .jsx
+    'react/jsx-max-props-per-line': ['error', {maximum: 3}], // airbnb is disabling this rule
+    'react/no-danger': 'error', // airbnb is using warn
+    'react/no-direct-mutation-state': 'error', // airbnb is disabling this rule
+    'react/no-find-dom-node': 'warn', // wishlist, one day
+    'react/no-unused-prop-types': 'off', // Is still buggy
+    'react/sort-prop-types': 'error', // airbnb do nothing here.
+    'react/sort-comp': [2, {
+      order: [
+        'static-methods',
+        'lifecycle',
+        // 'properties', // not real -- NEEDS A PR!!!
+        // '/^handle.+$/', // wishlist -- needs above first
+        // '/^(get|set)(?!(InitialState$|DefaultProps$|ChildContext$)).+$/', // wishlist -- needs above first
+        'everything-else',
+        '/^render.+$/',
+        'render'
+      ],
+    }],
+    'jsx-a11y/label-has-for': 'warn', // wishlist, one day
+    'mocha/handle-done-callback': 'error',
+    'mocha/no-exclusive-tests': 'error',
+    'mocha/no-global-tests': 'error',
+    'mocha/no-pending-tests': 'error',
+    'mocha/no-skipped-tests': 'error',
 
-    // Disabled
-    'no-case-declarations': 'off',
-    'strict': 'off',
+    // Overrides
     'no-console': 'off',
-    'no-magic-numbers': 'off',
-    'camelcase': 'off',
-    'no-underscore-dangle': 'off',
-    'handle-callback-err': 'off',
-
-    // React errors
-    'react/display-name': 'error',
-    'react/jsx-boolean-value': ['error', 'always'],
-    'react/jsx-closing-bracket-location': 'error',
-    'react/jsx-curly-spacing': 'error',
-    'react/jsx-equals-spacing': 'error',
-    'react/jsx-handler-names': 'error',
-    'react/jsx-indent-props': ['error', 2],
-    'react/jsx-indent': ['error', 2],
-    'react/jsx-max-props-per-line': ['error', {maximum: 3}],
-    'react/jsx-no-duplicate-props': 'error',
-    'react/jsx-no-literals': 'error',
-    'react/jsx-no-undef': 'error',
-    'react/jsx-pascal-case': 'error',
-    'react/jsx-space-before-closing': 'error',
-    'react/jsx-uses-react': 'error',
-    'react/jsx-uses-vars': 'error',
-    'react/no-danger': 'error',
-    'react/no-did-mount-set-state': 'error',
-    'react/no-did-update-set-state': 'error',
-    'react/no-direct-mutation-state': 'error',
-    'react/no-multi-comp': 'error',
-    'react/no-is-mounted': 'error',
-    'react/no-unknown-property': 'error',
-    'react/prop-types': 'error',
-    'react/prefer-es6-class': 'error',
-    'react/react-in-jsx-scope': 'error',
-    'react/require-extension': 'error',
-    'react/self-closing-comp': 'error',
-    'react/sort-comp': 'error',
-    'react/sort-prop-types': 'error',
-    'react/wrap-multilines': 'error',
-
-    // Disabled
-    'react/jsx-no-bind': 'off',
-    'react/jsx-sort-props': 'off',
-    'react/no-set-state': 'off',
-  }
+  },
 };

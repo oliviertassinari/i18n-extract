@@ -9,9 +9,9 @@ function isMissing(locale, keyUsed) {
       .every((localeKey) => {
         return regExp.exec(localeKey) === null;
       });
-  } else {
-    return !locale[keyUsed];
   }
+
+  return !locale[keyUsed];
 }
 
 export default function findMissing(locale, keysUsed) {

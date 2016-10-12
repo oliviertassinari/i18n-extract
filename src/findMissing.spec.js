@@ -1,4 +1,6 @@
-import {assert} from 'chai';
+/* eslint-env mocha */
+
+import { assert } from 'chai';
 import findMissing from './findMissing.js';
 
 describe('#findMissing()', () => {
@@ -23,7 +25,7 @@ describe('#findMissing()', () => {
       const missing = findMissing({
         'foo.key1': 'Key 1',
         'foo.key2': 'Key 2',
-        'bar': 'Key 3',
+        bar: 'Key 3',
         'foo.key.bar': 'Key 4',
       }, ['foo.*', '*.key1', '*', 'foo.*.bar']);
 
@@ -34,7 +36,7 @@ describe('#findMissing()', () => {
       const missing = findMissing({
         'bar.key1': 'Key 1',
         'bar.key.foo': 'Key 1',
-        'foo': 'Key 2',
+        foo: 'Key 2',
       }, ['foo.*', '*.key2', 'bar.*.foo1']);
 
       assert.deepEqual([

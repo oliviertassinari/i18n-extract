@@ -1,12 +1,13 @@
-import {assert} from 'chai';
+/* eslint-env mocha */
+
+import { assert } from 'chai';
 import fs from 'fs';
 import gettextParser from 'gettext-parser';
-
 import extractFromFiles from './extractFromFiles.js';
 import mergeMessagesWithPO from './mergeMessagesWithPO.js';
 
 describe('#mergeMessagesWithPO()', () => {
-  it('should output a new po file with 5 merged messages when we give a po file with one outdate message', () => {
+  it('should output a new po file with merged messages when we give a po file outdated message', () => {
     const output = 'messages2.po';
     const messages = extractFromFiles('src/mergeMessagesWithPOFixtures/input.js');
 
@@ -24,7 +25,7 @@ describe('#mergeMessagesWithPO()', () => {
         'content-type': 'text/plain; charset=utf-8',
         language: 'fr',
       },
-      'translations': {
+      translations: {
         '': {
           '': {
             msgid: '',
@@ -32,31 +33,31 @@ describe('#mergeMessagesWithPO()', () => {
               'Language: fr\nContent-Type: text/plain; charset=utf-8\nContent-Transfer-Encoding: 8bit\n',
             ],
           },
-          'follow': {
+          follow: {
             msgid: 'follow',
             msgstr: [
               'Suivre',
             ],
           },
-          'followed': {
+          followed: {
             msgid: 'followed',
             msgstr: [
               'Suivi !',
             ],
           },
-          'following': {
+          following: {
             msgid: 'following',
             msgstr: [
               '',
             ],
           },
-          'unfollow': {
+          unfollow: {
             msgid: 'unfollow',
             msgstr: [
               '',
             ],
           },
-          'unfollowed': {
+          unfollowed: {
             msgid: 'unfollowed',
             msgstr: [
               '',

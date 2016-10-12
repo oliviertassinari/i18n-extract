@@ -1,9 +1,5 @@
-/* eslint-disable no-var */
-/* eslint-disable prefer-template */
-/* eslint-disable prefer-arrow-callback */
-/* eslint-disable react/prefer-es6-class */
-/* eslint-disable react/prop-types */
-/* eslint-disable no-undef */
+/* eslint-disable */
+
 var classNames = require('classnames');
 
 define([
@@ -12,15 +8,13 @@ define([
   'js/mixins/betelgeuse',
   'jsx/lib/alert',
   'i18n',
-], function(
+], function (
   React,
   Backbone,
   BetelgeuseMixin,
   Alert,
   i18n
 ) {
-  'use strict';
-
   var FollowButton = React.createClass({
     propTypes: {
       isDisabled: React.PropTypes.bool,
@@ -28,14 +22,14 @@ define([
 
     mixins: [BetelgeuseMixin],
 
-    getDefaultProps: function() {
+    getDefaultProps() {
       return {
         group: {}, // Group object from api
         onClick: null,
         buttonText: i18n('follow'),
         buttonStyle: i18n('follow'), // Test the uniq filter
-        onToggle: function() {},
-        onFinished: function() {},
+        onToggle() {},
+        onFinished() {},
         silent: false,
         isDisabled: false,
 
@@ -46,7 +40,7 @@ define([
       };
     },
 
-    getInitialState: function() {
+    getInitialState() {
       return {
         hovered: false,
         changePending: false,
@@ -56,7 +50,7 @@ define([
     /**
      * When user has followed
      */
-    joined: function() {
+    joined() {
       this.app.setAlert(<Alert type="success">{i18n('followed')}</Alert>);
 
       this.setState({
@@ -70,7 +64,7 @@ define([
     /**
      * When user has unfollowed
      */
-    left: function() {
+    left() {
       this.app.setAlert(<Alert type="success">{i18n('unfollowed')}</Alert>);
 
       this.setState({
@@ -81,7 +75,7 @@ define([
     /**
      * When this button is clicked lets toggle membership
      */
-    handleClick: function() {
+    handleClick() {
       if (this.props.onClick) {
         this.props.onClick();
       } else {
@@ -110,7 +104,7 @@ define([
             this.props.silent
           ).then(this.joined).then(this.props.onUpdate);
 
-        change.then(function() {
+        change.then(function () {
           this.props.onToggle();
           this.props.onFinished(!this.props.isFollowing);
         }, this);
@@ -120,18 +114,18 @@ define([
     /**
      * When the button is hovered
      */
-    handleMouseEnter: function() {
-      this.setState({hovered: true});
+    handleMouseEnter() {
+      this.setState({ hovered: true });
     },
 
     /**
      * When the button is no longer hovered
      */
-    handleMouseLeave: function() {
-      this.setState({hovered: false});
+    handleMouseLeave() {
+      this.setState({ hovered: false });
     },
 
-    render: function() {
+    render() {
       var props = this.props;
       var buttonStyle = props.buttonStyle;
       var isFollowing = props.isFollowing;

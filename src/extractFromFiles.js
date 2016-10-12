@@ -1,7 +1,6 @@
 import glob from 'glob';
 import fs from 'fs';
-
-import {uniq} from './utils';
+import { uniq } from './utils';
 import extractFromCode from './extractFromCode';
 
 export default function extractFromFiles(filenames, options) {

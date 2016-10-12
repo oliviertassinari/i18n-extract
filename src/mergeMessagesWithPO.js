@@ -14,11 +14,11 @@ export default function mergeMessagesWithPO(messages, poFileName, outputFileName
   messages.forEach((message) => {
     // The translation already exist
     if (poTransalations[message]) {
-      messagesReused++;
+      messagesReused += 1;
       translations[message] = poTransalations[message];
       delete translations[message].comments;
     } else {
-      messagesNew++;
+      messagesNew += 1;
       translations[message] = {
         msgid: message,
         msgstr: [

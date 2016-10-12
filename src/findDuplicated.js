@@ -30,7 +30,7 @@ export default function findDuplicated(locale, keysUsed, options = {}) {
     reports.push({
       type: DUPLICATED,
       keys: valuesUsedHash[value],
-      value: value,
+      value,
     });
   });
 

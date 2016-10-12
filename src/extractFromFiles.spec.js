@@ -1,4 +1,6 @@
-import {assert} from 'chai';
+/* eslint-env mocha */
+
+import { assert } from 'chai';
 import extractFromFiles from './extractFromFiles.js';
 
 describe('#extractFromFiles()', () => {

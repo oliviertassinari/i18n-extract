@@ -1,7 +1,6 @@
-import {parse} from 'babylon';
+import { parse } from 'babylon';
 import traverse from 'babel-traverse';
-
-import {uniq} from './utils';
+import { uniq } from './utils';
 
 const noInformationTypes = [
   'CallExpression',
@@ -20,10 +19,11 @@ function getKey(node) {
       .join('*');
   } else if (noInformationTypes.includes(node.type)) {
     return '*'; // We can't extract anything.
-  } else {
-    console.warn(`Unsupported node: ${node.type}`);
-    return null;
   }
+
+  console.warn(`Unsupported node: ${node.type}`);
+
+  return null;
 }
 
 const commentRegExp = /i18n-extract (\S+)/;

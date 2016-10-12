@@ -1,4 +1,6 @@
-import {assert} from 'chai';
+/* eslint-env mocha */
+
+import { assert } from 'chai';
 import fs from 'fs';
 import path from 'path';
 import extractFromCode from './extractFromCode.js';

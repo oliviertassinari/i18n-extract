@@ -1,5 +1,7 @@
+/* eslint-disable */
+
 // fixture from https://github.com/gaearon/redux-devtools.
-import React, {PropTypes, findDOMNode} from 'react';
+import React, { PropTypes, findDOMNode } from 'react';
 import LogMonitorEntry from './LogMonitorEntry';
 import LogMonitorButton from './LogMonitorButton';
 import i18n from 'i18n';
@@ -179,8 +181,8 @@ export default class LogMonitor {
     }
 
     return (
-      <div style={{...styles.container, backgroundColor: theme.base00}}>
-        <div style={{...styles.buttonBar, borderColor: theme.base02}}>
+      <div style={{ ...styles.container, backgroundColor: theme.base00 }}>
+        <div style={{ ...styles.buttonBar, borderColor: theme.base02 }}>
           <LogMonitorButton theme={theme} onClick={this.handleReset}>
             {i18n('reset')}
           </LogMonitorButton>

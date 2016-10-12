@@ -25,7 +25,7 @@ export default function findUnused(locale, keysUsed) {
     if (!keysUsedHash[key]) {
       reports.push({
         type: UNUSED,
-        key: key,
+        key,
       });
     }
   });
