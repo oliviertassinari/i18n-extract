@@ -93,6 +93,14 @@ describe('#extractFromCode()', () => {
         '*',
       ], keys, 'Should return one key.');
     });
+
+    it('should return the right key with dynamic import in code', () => {
+      const keys = extractFromCode(getCode('dynamicImport.js'));
+
+      assert.deepEqual([
+        'key',
+      ], keys, 'Should return only one key.');
+    });
   });
 
   describe('dynamic keys', () => {
