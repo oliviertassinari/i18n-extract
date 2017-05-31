@@ -52,6 +52,7 @@ export default function extractFromCode(code, options = {}) {
       'asyncGenerators',
       'functionBind',
       'functionSent',
+      'dynamicImport',
     ],
   });
 
