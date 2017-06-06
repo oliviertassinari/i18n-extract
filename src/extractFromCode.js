@@ -26,7 +26,7 @@ function getKey(node) {
   return null;
 }
 
-const commentRegExp = /i18n-extract (\S+)/;
+const commentRegExp = /i18n-extract (.+)/;
 
 export default function extractFromCode(code, options = {}) {
   const {
@@ -61,9 +61,8 @@ export default function extractFromCode(code, options = {}) {
   // Look for keys in the comments.
   ast.comments.forEach((comment) => {
     const match = commentRegExp.exec(comment.value);
-
     if (match) {
-      keys.push(match[1]);
+      keys.push(match[1].trim());
     }
   });
 
