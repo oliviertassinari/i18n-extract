@@ -131,6 +131,8 @@ describe('#extractFromCode()', () => {
       assert.deepEqual([
         'foo.bar1',
         'foo.bar2',
+        'foo spaced1',
+        'foo spaced2',
       ], keys, 'Should return the good keys.');
     });
   });
