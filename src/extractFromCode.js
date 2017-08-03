@@ -27,6 +27,7 @@ function getKey(node) {
 }
 
 const commentRegExp = /i18n-extract (.+)/;
+const commentIgnoreRegExp = /i18n-extract-disable-line/;
 
 export default function extractFromCode(code, options = {}) {
   const {
@@ -57,12 +58,19 @@ export default function extractFromCode(code, options = {}) {
   });
 
   const keys = [];
+  const ignoredLines = [];
 
   // Look for keys in the comments.
   ast.comments.forEach((comment) => {
-    const match = commentRegExp.exec(comment.value);
+    let match = commentRegExp.exec(comment.value);
     if (match) {
       keys.push(match[1].trim());
+    }
+
+    // Check for ignored lines
+    match = commentIgnoreRegExp.exec(comment.value);
+    if (match) {
+      ignoredLines.push(comment.loc.start.line);
     }
   });
 
@@ -72,6 +80,11 @@ export default function extractFromCode(code, options = {}) {
       const {
         node,
       } = path;
+
+      if (ignoredLines.includes(node.loc.end.line)) {
+        // Skip ignored lines
+        return;
+      }
 
       const {
         callee: {

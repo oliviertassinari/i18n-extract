@@ -124,7 +124,7 @@ describe('#extractFromCode()', () => {
     });
   });
 
-  describe('comment', () => {
+  describe('include comment', () => {
     it('should return the keys when added as a comment', () => {
       const keys = extractFromCode(getCode('comment.js'));
 
@@ -133,6 +133,17 @@ describe('#extractFromCode()', () => {
         'foo.bar2',
         'foo spaced1',
         'foo spaced2',
+      ], keys, 'Should return the good keys.');
+    });
+  });
+
+  describe('disable line comment', () => {
+    it('should ignore the keys from a line disabled from comment', () => {
+      const keys = extractFromCode(getCode('disable-comment.js'));
+
+      assert.deepEqual([
+        'foo.bar1',
+        'foo.bar3',
       ], keys, 'Should return the good keys.');
     });
   });
