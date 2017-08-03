@@ -9,7 +9,10 @@ describe('#findUnused()', () => {
       const unused = findUnused({
         key1: 'Key 1',
         key2: 'Key 2',
-      }, ['key1', 'key2']);
+      }, [
+        { key: 'key1', loc: null },
+        { key: 'key2', loc: null },
+      ]);
 
       assert.deepEqual([], unused, 'Should report zero unused key.');
     });
@@ -19,7 +22,10 @@ describe('#findUnused()', () => {
         key1: 'Key 1',
         key2: 'Key 2',
         key3: 'Key 3',
-      }, ['key1', 'key2']);
+      }, [
+        { key: 'key1', loc: null },
+        { key: 'key2', loc: null },
+      ]);
 
       assert.deepEqual([
         {
@@ -35,7 +41,7 @@ describe('#findUnused()', () => {
       const unused = findUnused({
         'foo.key1': 'Key 1',
         'foo.key2': 'Key 2',
-      }, ['foo.*']);
+      }, [{ key: 'foo.*', loc: null }]);
 
       assert.deepEqual([], unused, 'Should report zero unused key.');
     });
@@ -45,7 +51,7 @@ describe('#findUnused()', () => {
         'foo.key1': 'Key 1',
         'foo.key2': 'Key 2',
         key3: 'Key 3',
-      }, ['foo.*']);
+      }, [{ key: 'foo.*', loc: null }]);
 
       assert.deepEqual([
         {
@@ -58,7 +64,7 @@ describe('#findUnused()', () => {
     it('should do an exact match even with dynamic keys', () => {
       const missing = findUnused({
         'bar.key.foo': 'Key 1',
-      }, ['key.*']);
+      }, [{ key: 'key.*', loc: null }]);
 
       assert.deepEqual([
         {

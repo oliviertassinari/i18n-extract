@@ -18,10 +18,10 @@ export default function findMissing(locale, keysUsed) {
   const reports = [];
 
   keysUsed.forEach((keyUsed) => {
-    if (isMissing(locale, keyUsed)) {
+    if (isMissing(locale, keyUsed.key)) {
       reports.push({
         type: MISSING,
-        key: keyUsed,
+        ...keyUsed,
       });
     }
   });
