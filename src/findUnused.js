@@ -6,6 +6,8 @@ export default function findUnused(locale, keysUsed) {
   const keysUsedHash = {};
 
   keysUsed.forEach((keyUsed) => {
+    keyUsed = keyUsed.key;
+
     // Dynamic key
     if (keyUsed.includes('*')) {
       const regExp = new RegExp(`^${keyUsed.replace('*', '(.+)')}$`);

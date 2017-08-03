@@ -12,6 +12,8 @@ export default function mergeMessagesWithPO(messages, poFileName, outputFileName
   let messagesReused = 0;
 
   messages.forEach((message) => {
+    message = message.key;
+
     // The translation already exist
     if (poTransalations[message]) {
       messagesReused += 1;

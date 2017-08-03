@@ -1,6 +1,5 @@
 import { parse } from 'babylon';
 import traverse from 'babel-traverse';
-import { uniq } from './utils';
 
 const noInformationTypes = [
   'CallExpression',
@@ -64,7 +63,10 @@ export default function extractFromCode(code, options = {}) {
   ast.comments.forEach((comment) => {
     let match = commentRegExp.exec(comment.value);
     if (match) {
-      keys.push(match[1].trim());
+      keys.push({
+        key: match[1].trim(),
+        loc: comment.loc,
+      });
     }
 
     // Check for ignored lines
@@ -98,11 +100,14 @@ export default function extractFromCode(code, options = {}) {
         const key = getKey(node.arguments[0]);
 
         if (key) {
-          keys.push(key);
+          keys.push({
+            key,
+            loc: node.loc,
+          });
         }
       }
     },
   });
 
-  return uniq(keys);
+  return keys;
 }

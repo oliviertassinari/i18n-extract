@@ -5,10 +5,10 @@ export default function forbidDynamic(locale, keysUsed) {
 
   keysUsed.forEach((keyUsed) => {
     // Dynamic key
-    if (keyUsed.includes('*')) {
+    if (keyUsed.key.includes('*')) {
       reports.push({
         type: FORBID_DYNAMIC,
-        key: keyUsed,
+        ...keyUsed,
       });
     }
   });
