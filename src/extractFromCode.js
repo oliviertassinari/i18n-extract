@@ -31,6 +31,7 @@ const commentIgnoreRegExp = /i18n-extract-disable-line/;
 export default function extractFromCode(code, options = {}) {
   const {
     marker = 'i18n',
+    keyLoc = 0,
   } = options;
 
   const ast = parse(code, {
@@ -97,7 +98,8 @@ export default function extractFromCode(code, options = {}) {
 
       if ((type === 'Identifier' && name === marker) ||
         path.get('callee').matchesPattern(marker)) {
-        const key = getKey(node.arguments[0]);
+        const key = getKey(keyLoc < 0 ? node.arguments[node.arguments.length + keyLoc] :
+              node.arguments[keyLoc]);
 
         if (key) {
           keys.push({

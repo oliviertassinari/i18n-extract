@@ -165,7 +165,30 @@ describe('#extractFromCode()', () => {
           key: 'this_is_a_custom_marker',
           loc: {
             end: {
-              column: 29,
+              column: 56,
+              line: 5,
+            },
+            start: {
+              column: 0,
+              line: 5,
+            },
+          },
+        },
+      ], keys, 'Should take into account the marker option.');
+    });
+
+    it('should return the right keys with a custom keyLoc', () => {
+      const keys = extractFromCode(getCode('marker.js'), {
+        marker: '__',
+        keyLoc: -1,
+      });
+
+      assert.deepEqual([
+        {
+          key: 'this_is_a_custom_keyLoc',
+          loc: {
+            end: {
+              column: 56,
               line: 5,
             },
             start: {
