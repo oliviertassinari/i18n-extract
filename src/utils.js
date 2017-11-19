@@ -1,6 +1,13 @@
 export function uniq(array) {
   const seen = {};
-  return array.filter((item) => {
-    return seen[item] ? false : (seen[item] = true);
+  return array.filter(item => {
+    if (seen[item]) {
+      return false;
+    }
+
+    seen[item] = true;
+    return true;
   });
 }
+
+export default {};

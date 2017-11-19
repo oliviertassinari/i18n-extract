@@ -1,5 +1,5 @@
 export default function flatten(locale, prefix = '', flattened = {}) {
-  Object.keys(locale).forEach((key) => {
+  Object.keys(locale).forEach(key => {
     const value = locale[key];
 
     let fullKey;

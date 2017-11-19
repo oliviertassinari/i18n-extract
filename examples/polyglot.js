@@ -1,17 +1,9 @@
-import {
-  extractFromFiles,
-  findMissing,
-  findUnused,
-  findDuplicated,
-  flatten,
-} from 'i18n-extract';
+import { extractFromFiles, findMissing, findUnused, findDuplicated, flatten } from 'i18n-extract';
 import frLocale from './src/locale/frLocale';
 
 const frLocaleFlattened = flatten(frLocale);
 
-const keys = extractFromFiles([
-  'src/**/*.js',
-], {
+const keys = extractFromFiles(['src/**/*.js'], {
   marker: 'polyglot.t',
 });
 

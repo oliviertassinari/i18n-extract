@@ -11,7 +11,7 @@ export default function mergeMessagesWithPO(messages, poFileName, outputFileName
   let messagesNew = 0;
   let messagesReused = 0;
 
-  messages.forEach((message) => {
+  messages.forEach(message => {
     message = message.key;
 
     // The translation already exist
@@ -23,9 +23,7 @@ export default function mergeMessagesWithPO(messages, poFileName, outputFileName
       messagesNew += 1;
       translations[message] = {
         msgid: message,
-        msgstr: [
-          '',
-        ],
+        msgstr: [''],
       };
     }
   });
@@ -34,7 +32,8 @@ export default function mergeMessagesWithPO(messages, poFileName, outputFileName
 
   fs.writeFileSync(outputFileName, gettextParser.po.compile(po));
 
-  const messagesLengthBefore = Object.keys(poTransalations).length - 1; // Not sure why the -1 is for
+  // Not sure why the -1 is for
+  const messagesLengthBefore = Object.keys(poTransalations).length - 1;
   const messagesLengthAfter = Object.keys(translations).length;
 
   console.log(`${outputFileName} has ${messagesLengthAfter} messages.`);

@@ -2,18 +2,12 @@
 
 var classNames = require('classnames');
 
-define([
-  'react',
-  'backbone',
-  'js/mixins/betelgeuse',
-  'jsx/lib/alert',
-  'i18n',
-], function (
+define(['react', 'backbone', 'js/mixins/betelgeuse', 'jsx/lib/alert', 'i18n'], function(
   React,
   Backbone,
   BetelgeuseMixin,
   Alert,
-  i18n
+  i18n,
 ) {
   var FollowButton = React.createClass({
     propTypes: {
@@ -58,7 +52,12 @@ define([
       });
 
       // Analytics tracking
-      Backbone.trigger('analytics:trackEvent', 'Activity', 'Followed ' + this.props.followType, this.props.trackLabel);
+      Backbone.trigger(
+        'analytics:trackEvent',
+        'Activity',
+        'Followed ' + this.props.followType,
+        this.props.trackLabel,
+      );
     },
 
     /**
@@ -92,19 +91,17 @@ define([
           changePending: true,
         });
 
-        var change = this.props.isFollowing ?
-          this.ctx.unfollow(
-            this.props.followType,
-            this.props.followIds,
-            this.props.silent
-          ).then(this.left).then(this.props.onUpdate) :
-          this.ctx.follow(
-            this.props.followType,
-            this.props.followIds,
-            this.props.silent
-          ).then(this.joined).then(this.props.onUpdate);
+        var change = this.props.isFollowing
+          ? this.ctx
+              .unfollow(this.props.followType, this.props.followIds, this.props.silent)
+              .then(this.left)
+              .then(this.props.onUpdate)
+          : this.ctx
+              .follow(this.props.followType, this.props.followIds, this.props.silent)
+              .then(this.joined)
+              .then(this.props.onUpdate);
 
-        change.then(function () {
+        change.then(function() {
           this.props.onToggle();
           this.props.onFinished(!this.props.isFollowing);
         }, this);
@@ -152,7 +149,7 @@ define([
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.handleMouseLeave}
         >
-          {isFollowing ? followingText : (props.children || props.buttonText)}
+          {isFollowing ? followingText : props.children || props.buttonText}
         </button>
       );
     },

@@ -53,7 +53,7 @@ export default class LogMonitor {
   };
 
   static defaultProps = {
-    select: (state) => state,
+    select: state => state,
     monitorState: {
       isVisible: true,
     },
@@ -64,18 +64,10 @@ export default class LogMonitor {
     const node = findDOMNode(this.refs.elements);
     if (!node) {
       this.scrollDown = true;
-    } else if (
-      this.props.stagedActions.length < nextProps.stagedActions.length
-    ) {
-      const {
-        scrollTop,
-        offsetHeight,
-        scrollHeight,
-      } = node;
+    } else if (this.props.stagedActions.length < nextProps.stagedActions.length) {
+      const { scrollTop, offsetHeight, scrollHeight } = node;
 
-      this.scrollDown = Math.abs(
-        scrollHeight - (scrollTop + offsetHeight)
-      ) < 20;
+      this.scrollDown = Math.abs(scrollHeight - (scrollTop + offsetHeight)) < 20;
     } else {
       this.scrollDown = false;
     }
@@ -87,10 +79,7 @@ export default class LogMonitor {
       return;
     }
     if (this.scrollDown) {
-      const {
-        offsetHeight,
-        scrollHeight,
-      } = node;
+      const { offsetHeight, scrollHeight } = node;
       node.scrollTop = scrollHeight - offsetHeight;
       this.scrollDown = false;
     }
@@ -117,11 +106,10 @@ export default class LogMonitor {
   }
 
   handleKeyPress(event) {
-    const {
-      monitorState,
-    } = this.props;
+    const { monitorState } = this.props;
 
-    if (event.ctrlKey && event.keyCode === 72) { // Ctrl+H
+    if (event.ctrlKey && event.keyCode === 72) {
+      // Ctrl+H
       event.preventDefault();
       this.props.setMonitorState({
         ...monitorState,
@@ -132,13 +120,7 @@ export default class LogMonitor {
 
   render() {
     const elements = [];
-    const {
-      monitorState,
-      skippedActions,
-      stagedActions,
-      computedStates,
-      select,
-    } = this.props;
+    const { monitorState, skippedActions, stagedActions, computedStates, select } = this.props;
     let theme;
     if (typeof this.props.theme === 'string') {
       if (typeof themes[this.props.theme] !== 'undefined') {
@@ -156,10 +138,7 @@ export default class LogMonitor {
 
     for (let i = 0; i < stagedActions.length; i++) {
       const action = stagedActions[i];
-      const {
-        state,
-        error,
-      } = computedStates[i];
+      const { state, error } = computedStates[i];
       let previousState;
       if (i > 0) {
         previousState = computedStates[i - 1].state;
@@ -176,7 +155,7 @@ export default class LogMonitor {
           collapsed={skippedActions[i]}
           error={error}
           onActionClick={this.handleToggleAction}
-        />
+        />,
       );
     }
 
@@ -186,17 +165,25 @@ export default class LogMonitor {
           <LogMonitorButton theme={theme} onClick={this.handleReset}>
             {i18n('reset')}
           </LogMonitorButton>
-          <LogMonitorButton theme={theme} onClick={this.handleRollback} enabled={computedStates.length}>
+          <LogMonitorButton
+            theme={theme}
+            onClick={this.handleRollback}
+            enabled={computedStates.length}
+          >
             {i18n('revert')}
           </LogMonitorButton>
           <LogMonitorButton
             theme={theme}
             onClick={this.handleSweep}
-            enabled={Object.keys(skippedActions).some((key) => skippedActions[key])}
+            enabled={Object.keys(skippedActions).some(key => skippedActions[key])}
           >
             {i18n('sweep')}
           </LogMonitorButton>
-          <LogMonitorButton theme={theme} onClick={this.handleCommit} enabled={computedStates.length > 1}>
+          <LogMonitorButton
+            theme={theme}
+            onClick={this.handleCommit}
+            enabled={computedStates.length > 1}
+          >
             {i18n('commit')}
           </LogMonitorButton>
         </div>
