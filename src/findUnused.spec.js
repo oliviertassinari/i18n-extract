@@ -6,72 +6,93 @@ import findUnused from './findUnused.js';
 describe('#findUnused()', () => {
   describe('static keys', () => {
     it('should work with a simple case', () => {
-      const unused = findUnused({
-        key1: 'Key 1',
-        key2: 'Key 2',
-      }, [
-        { key: 'key1', loc: null },
-        { key: 'key2', loc: null },
-      ]);
+      const unused = findUnused(
+        {
+          key1: 'Key 1',
+          key2: 'Key 2',
+        },
+        [{ key: 'key1', loc: null }, { key: 'key2', loc: null }],
+      );
 
       assert.deepEqual([], unused, 'Should report zero unused key.');
     });
 
     it('should work with a simple case', () => {
-      const unused = findUnused({
-        key1: 'Key 1',
-        key2: 'Key 2',
-        key3: 'Key 3',
-      }, [
-        { key: 'key1', loc: null },
-        { key: 'key2', loc: null },
-      ]);
-
-      assert.deepEqual([
+      const unused = findUnused(
         {
-          type: 'UNUSED',
-          key: 'key3',
+          key1: 'Key 1',
+          key2: 'Key 2',
+          key3: 'Key 3',
         },
-      ], unused, 'Should report one unused key.');
+        [{ key: 'key1', loc: null }, { key: 'key2', loc: null }],
+      );
+
+      assert.deepEqual(
+        [
+          {
+            type: 'UNUSED',
+            key: 'key3',
+          },
+        ],
+        unused,
+        'Should report one unused key.',
+      );
     });
   });
 
   describe('dynamic keys', () => {
     it('should work with a simple case', () => {
-      const unused = findUnused({
-        'foo.key1': 'Key 1',
-        'foo.key2': 'Key 2',
-      }, [{ key: 'foo.*', loc: null }]);
+      const unused = findUnused(
+        {
+          'foo.key1': 'Key 1',
+          'foo.key2': 'Key 2',
+        },
+        [{ key: 'foo.*', loc: null }],
+      );
 
       assert.deepEqual([], unused, 'Should report zero unused key.');
     });
 
     it('should work with a simple case', () => {
-      const unused = findUnused({
-        'foo.key1': 'Key 1',
-        'foo.key2': 'Key 2',
-        key3: 'Key 3',
-      }, [{ key: 'foo.*', loc: null }]);
-
-      assert.deepEqual([
+      const unused = findUnused(
         {
-          type: 'UNUSED',
-          key: 'key3',
+          'foo.key1': 'Key 1',
+          'foo.key2': 'Key 2',
+          key3: 'Key 3',
         },
-      ], unused, 'Should report one unused key.');
+        [{ key: 'foo.*', loc: null }],
+      );
+
+      assert.deepEqual(
+        [
+          {
+            type: 'UNUSED',
+            key: 'key3',
+          },
+        ],
+        unused,
+        'Should report one unused key.',
+      );
     });
 
     it('should do an exact match even with dynamic keys', () => {
-      const missing = findUnused({
-        'bar.key.foo': 'Key 1',
-      }, [{ key: 'key.*', loc: null }]);
-
-      assert.deepEqual([
+      const missing = findUnused(
         {
-          key: 'bar.key.foo',
-          type: 'UNUSED',
+          'bar.key.foo': 'Key 1',
         },
-      ], missing, 'Should report one missing key.');
+        [{ key: 'key.*', loc: null }],
+      );
+
+      assert.deepEqual(
+        [
+          {
+            key: 'bar.key.foo',
+            type: 'UNUSED',
+          },
+        ],
+        missing,
+        'Should report one missing key.',
+      );
     });
   });
 });

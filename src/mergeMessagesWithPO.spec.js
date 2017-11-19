@@ -20,10 +20,15 @@ describe('#mergeMessagesWithPO()', () => {
   });
 
   it('should not crash when the path is absolute', () => {
-    mergeMessagesWithPO(messages, path.join(__dirname, 'mergeMessagesWithPOFixtures/messages.po'), output);
+    mergeMessagesWithPO(
+      messages,
+      path.join(__dirname, 'mergeMessagesWithPOFixtures/messages.po'),
+      output,
+    );
   });
 
-  it('should output a new po file with merged messages when we give a po file outdated message', () => {
+  // when we give a po file outdated message
+  it('should output a new po file with merged messages', () => {
     mergeMessagesWithPO(messages, 'mergeMessagesWithPOFixtures/messages.po', output);
 
     const poContent = fs.readFileSync(output);
@@ -41,38 +46,32 @@ describe('#mergeMessagesWithPO()', () => {
           '': {
             msgid: '',
             msgstr: [
-              'Language: fr\nContent-Type: text/plain; charset=utf-8\nContent-Transfer-Encoding: 8bit\n',
+              [
+                'Language: fr',
+                'Content-Type: text/plain; charset=utf-8',
+                'Content-Transfer-Encoding: 8bit\n',
+              ].join('\n'),
             ],
           },
           follow: {
             msgid: 'follow',
-            msgstr: [
-              'Suivre',
-            ],
+            msgstr: ['Suivre'],
           },
           followed: {
             msgid: 'followed',
-            msgstr: [
-              'Suivi !',
-            ],
+            msgstr: ['Suivi !'],
           },
           following: {
             msgid: 'following',
-            msgstr: [
-              '',
-            ],
+            msgstr: [''],
           },
           unfollow: {
             msgid: 'unfollow',
-            msgstr: [
-              '',
-            ],
+            msgstr: [''],
           },
           unfollowed: {
             msgid: 'unfollowed',
-            msgstr: [
-              '',
-            ],
+            msgstr: [''],
           },
         },
       },

@@ -3,16 +3,14 @@ const DUPLICATED = 'DUPLICATED';
 export default function findDuplicated(locale, keysUsed, options = {}) {
   const reports = [];
 
-  const {
-    threshold = 1,
-  } = options;
+  const { threshold = 1 } = options;
 
   const valuesUsedHash = {};
 
   // Used for the second stage report
   const valuesAboveThreshold = [];
 
-  Object.keys(locale).forEach((key) => {
+  Object.keys(locale).forEach(key => {
     const value = locale[key];
 
     if (valuesUsedHash[value]) {
@@ -26,7 +24,7 @@ export default function findDuplicated(locale, keysUsed, options = {}) {
     }
   });
 
-  valuesAboveThreshold.forEach((value) => {
+  valuesAboveThreshold.forEach(value => {
     reports.push({
       type: DUPLICATED,
       keys: valuesUsedHash[value],

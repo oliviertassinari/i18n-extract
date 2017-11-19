@@ -3,7 +3,7 @@ const FORBID_DYNAMIC = 'FORBID_DYNAMIC';
 export default function forbidDynamic(locale, keysUsed) {
   const reports = [];
 
-  keysUsed.forEach((keyUsed) => {
+  keysUsed.forEach(keyUsed => {
     // Dynamic key
     if (keyUsed.key.includes('*')) {
       reports.push({

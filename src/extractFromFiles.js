@@ -7,21 +7,19 @@ export default function extractFromFiles(filenames, options) {
 
   // filenames should be an array
   if (typeof filenames === 'string') {
-    filenames = [
-      filenames,
-    ];
+    filenames = [filenames];
   }
 
   let toScan = [];
 
-  filenames.forEach((filename) => {
+  filenames.forEach(filename => {
     toScan = toScan.concat(glob.sync(filename, {}));
   });
 
-  toScan.forEach((filename) => {
+  toScan.forEach(filename => {
     const code = fs.readFileSync(filename, 'utf8');
     const extractedKeys = extractFromCode(code, options);
-    extractedKeys.forEach((keyObj) => {
+    extractedKeys.forEach(keyObj => {
       keyObj.file = filename;
       keys.push(keyObj);
     });
