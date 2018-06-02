@@ -724,4 +724,82 @@ describe('#extractFromCode()', () => {
       );
     });
   });
+
+  describe('logical expression', () => {
+    it('should parse logical expressions', () => {
+      const keys = extractFromCode(getCode('logicalExpression.js'));
+
+      assert.deepEqual(
+        [
+          {
+            key: 'bar',
+            loc: {
+              end: {
+                column: 18,
+                line: 8,
+              },
+              start: {
+                column: 0,
+                line: 8,
+              },
+            },
+          },
+          {
+            key: '*',
+            loc: {
+              end: {
+                column: 18,
+                line: 11,
+              },
+              start: {
+                column: 0,
+                line: 11,
+              },
+            },
+          },
+          {
+            key: 'baz',
+            loc: {
+              end: {
+                column: 18,
+                line: 11,
+              },
+              start: {
+                column: 0,
+                line: 11,
+              },
+            },
+          },
+          {
+            key: 'bar',
+            loc: {
+              end: {
+                column: 27,
+                line: 14,
+              },
+              start: {
+                column: 0,
+                line: 14,
+              },
+            },
+          },
+          {
+            key: 'baz',
+            loc: {
+              end: {
+                column: 27,
+                line: 14,
+              },
+              start: {
+                column: 0,
+                line: 14,
+              },
+            },
+          },
+        ],
+        keys,
+        'Should return the good keys.',
+      );
+    });
+  });
 });

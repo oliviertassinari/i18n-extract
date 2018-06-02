@@ -17,6 +17,16 @@ function getKeys(node) {
     return [node.quasis.map(quasi => quasi.value.cooked).join('*')];
   } else if (node.type === 'ConditionalExpression') {
     return [...getKeys(node.consequent), ...getKeys(node.alternate)];
+  } else if (node.type === 'LogicalExpression') {
+    switch (node.operator) {
+      case '&&':
+        return [...getKeys(node.right)];
+      case '||':
+        return [...getKeys(node.left), ...getKeys(node.right)];
+      default:
+        console.warn(`unsupported logicalExpression's operator: ${node.operator}`);
+        return [null];
+    }
   } else if (noInformationTypes.includes(node.type)) {
     return ['*']; // We can't extract anything.
   }
