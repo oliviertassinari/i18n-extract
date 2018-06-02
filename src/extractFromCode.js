@@ -3,20 +3,27 @@ import traverse from 'babel-traverse';
 
 const noInformationTypes = ['CallExpression', 'Identifier', 'MemberExpression'];
 
-function getKey(node) {
+function getKeys(node) {
   if (node.type === 'StringLiteral') {
-    return node.value;
+    return [node.value];
   } else if (node.type === 'BinaryExpression' && node.operator === '+') {
-    return getKey(node.left) + getKey(node.right);
+    const left = getKeys(node.left);
+    const right = getKeys(node.right);
+    if (left.length > 1 || right.length > 1) {
+      console.warn('Unsupported multiple keys for binary expression, keys skipped.'); // TODO
+    }
+    return [left[0] + right[0]];
   } else if (node.type === 'TemplateLiteral') {
-    return node.quasis.map(quasi => quasi.value.cooked).join('*');
+    return [node.quasis.map(quasi => quasi.value.cooked).join('*')];
+  } else if (node.type === 'ConditionalExpression') {
+    return [...getKeys(node.consequent), ...getKeys(node.alternate)];
   } else if (noInformationTypes.includes(node.type)) {
-    return '*'; // We can't extract anything.
+    return ['*']; // We can't extract anything.
   }
 
   console.warn(`Unsupported node: ${node.type}`);
 
-  return null;
+  return [null];
 }
 
 const commentRegExp = /i18n-extract (.+)/;
@@ -78,19 +85,23 @@ export default function extractFromCode(code, options = {}) {
         return;
       }
 
-      const { callee: { name, type } } = node;
+      const {
+        callee: { name, type },
+      } = node;
 
       if ((type === 'Identifier' && name === marker) || path.get('callee').matchesPattern(marker)) {
-        const key = getKey(
+        const foundKeys = getKeys(
           keyLoc < 0 ? node.arguments[node.arguments.length + keyLoc] : node.arguments[keyLoc],
         );
 
-        if (key) {
-          keys.push({
-            key,
-            loc: node.loc,
-          });
-        }
+        foundKeys.forEach(key => {
+          if (key) {
+            keys.push({
+              key,
+              loc: node.loc,
+            });
+          }
+        });
       }
     },
   });

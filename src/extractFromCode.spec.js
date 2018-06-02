@@ -646,4 +646,43 @@ describe('#extractFromCode()', () => {
       );
     });
   });
+
+  describe('ternary operator', () => {
+    it('should parse ternary operator', () => {
+      const keys = extractFromCode(getCode('ternaryOperator.js'));
+
+      assert.deepEqual(
+        [
+          {
+            key: '*',
+            loc: {
+              end: {
+                column: 23,
+                line: 7,
+              },
+              start: {
+                column: 0,
+                line: 7,
+              },
+            },
+          },
+          {
+            key: 'bar',
+            loc: {
+              end: {
+                column: 23,
+                line: 7,
+              },
+              start: {
+                column: 0,
+                line: 7,
+              },
+            },
+          },
+        ],
+        keys,
+        'Should return the good keys.',
+      );
+    });
+  });
 });
