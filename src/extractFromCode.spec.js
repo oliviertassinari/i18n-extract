@@ -658,11 +658,11 @@ describe('#extractFromCode()', () => {
             loc: {
               end: {
                 column: 23,
-                line: 7,
+                line: 8,
               },
               start: {
                 column: 0,
-                line: 7,
+                line: 8,
               },
             },
           },
@@ -671,11 +671,50 @@ describe('#extractFromCode()', () => {
             loc: {
               end: {
                 column: 23,
-                line: 7,
+                line: 8,
               },
               start: {
                 column: 0,
-                line: 7,
+                line: 8,
+              },
+            },
+          },
+          {
+            key: '*',
+            loc: {
+              end: {
+                column: 50,
+                line: 11,
+              },
+              start: {
+                column: 0,
+                line: 11,
+              },
+            },
+          },
+          {
+            key: 'baz',
+            loc: {
+              end: {
+                column: 50,
+                line: 11,
+              },
+              start: {
+                column: 0,
+                line: 11,
+              },
+            },
+          },
+          {
+            key: 'bar',
+            loc: {
+              end: {
+                column: 50,
+                line: 11,
+              },
+              start: {
+                column: 0,
+                line: 11,
               },
             },
           },
