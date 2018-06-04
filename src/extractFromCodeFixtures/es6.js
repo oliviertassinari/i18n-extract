@@ -190,6 +190,10 @@ export default class LogMonitor {
         <div style={styles.elements} ref="elements">
           {elements}
         </div>
+        <>
+          <div>kek</div>
+          <span>bur</span>
+        </>
       </div>
     );
   }
