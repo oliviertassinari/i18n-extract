@@ -646,4 +646,160 @@ describe('#extractFromCode()', () => {
       );
     });
   });
+
+  describe('ternary operator', () => {
+    it('should parse ternary operator', () => {
+      const keys = extractFromCode(getCode('ternaryOperator.js'));
+
+      assert.deepEqual(
+        [
+          {
+            key: '*',
+            loc: {
+              end: {
+                column: 23,
+                line: 8,
+              },
+              start: {
+                column: 0,
+                line: 8,
+              },
+            },
+          },
+          {
+            key: 'bar',
+            loc: {
+              end: {
+                column: 23,
+                line: 8,
+              },
+              start: {
+                column: 0,
+                line: 8,
+              },
+            },
+          },
+          {
+            key: '*',
+            loc: {
+              end: {
+                column: 50,
+                line: 11,
+              },
+              start: {
+                column: 0,
+                line: 11,
+              },
+            },
+          },
+          {
+            key: 'baz',
+            loc: {
+              end: {
+                column: 50,
+                line: 11,
+              },
+              start: {
+                column: 0,
+                line: 11,
+              },
+            },
+          },
+          {
+            key: 'bar',
+            loc: {
+              end: {
+                column: 50,
+                line: 11,
+              },
+              start: {
+                column: 0,
+                line: 11,
+              },
+            },
+          },
+        ],
+        keys,
+        'Should return the good keys.',
+      );
+    });
+  });
+
+  describe('logical expression', () => {
+    it('should parse logical expressions', () => {
+      const keys = extractFromCode(getCode('logicalExpression.js'));
+
+      assert.deepEqual(
+        [
+          {
+            key: 'bar',
+            loc: {
+              end: {
+                column: 18,
+                line: 8,
+              },
+              start: {
+                column: 0,
+                line: 8,
+              },
+            },
+          },
+          {
+            key: '*',
+            loc: {
+              end: {
+                column: 18,
+                line: 11,
+              },
+              start: {
+                column: 0,
+                line: 11,
+              },
+            },
+          },
+          {
+            key: 'baz',
+            loc: {
+              end: {
+                column: 18,
+                line: 11,
+              },
+              start: {
+                column: 0,
+                line: 11,
+              },
+            },
+          },
+          {
+            key: 'bar',
+            loc: {
+              end: {
+                column: 27,
+                line: 14,
+              },
+              start: {
+                column: 0,
+                line: 14,
+              },
+            },
+          },
+          {
+            key: 'baz',
+            loc: {
+              end: {
+                column: 27,
+                line: 14,
+              },
+              start: {
+                column: 0,
+                line: 14,
+              },
+            },
+          },
+        ],
+        keys,
+        'Should return the good keys.',
+      );
+    });
+  });
 });
