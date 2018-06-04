@@ -95,9 +95,7 @@ export default function extractFromCode(code, options = {}) {
         return;
       }
 
-      const {
-        callee: { name, type },
-      } = node;
+      const { callee: { name, type } } = node;
 
       if ((type === 'Identifier' && name === marker) || path.get('callee').matchesPattern(marker)) {
         const foundKeys = getKeys(
