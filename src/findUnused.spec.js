@@ -94,5 +94,26 @@ describe('#findUnused()', () => {
         'Should report one missing key.',
       );
     });
+
+    it('should ignore * only keys', () => {
+      const missing = findUnused(
+        {
+          'foo.key1': 'Key 1',
+          'foo.key2': 'Key 2',
+        },
+        [{ key: '*', loc: null }, { key: 'foo.key1', loc: null }],
+      );
+
+      assert.deepEqual(
+        [
+          {
+            key: 'foo.key2',
+            type: 'UNUSED',
+          },
+        ],
+        missing,
+        'Should report one missing key.',
+      );
+    });
   });
 });
