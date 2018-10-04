@@ -40,7 +40,7 @@ const commentRegExp = /i18n-extract (.+)/;
 const commentIgnoreRegExp = /i18n-extract-disable-line/;
 
 export default function extractFromCode(code, options = {}) {
-  const { marker = 'i18n', keyLoc = 0 } = options;
+  const { marker = 'i18n', keyLoc = 0, useTypeScript = false } = options;
 
   const ast = parse(code, {
     sourceType: 'module',
@@ -48,7 +48,6 @@ export default function extractFromCode(code, options = {}) {
     // Enable all the plugins
     plugins: [
       'jsx',
-      'flow',
       'asyncFunctions',
       'classConstructorCall',
       'doExpressions',
@@ -62,7 +61,7 @@ export default function extractFromCode(code, options = {}) {
       'functionBind',
       'functionSent',
       'dynamicImport',
-    ],
+    ].concat([useTypeScript ? 'typescript' : 'flow']),
   });
 
   const keys = [];
