@@ -169,7 +169,7 @@ describe('#extractFromFiles()', () => {
     );
   });
 
-  it('should work when scanning typescript', () => {
+  it('should work when scanning typescript files', () => {
     const keys = extractFromFiles(
       ['src/extractFromFilesFixture/*.tsx', 'src/extractFromFilesFixture/*.ts'],
       { useTypescript: true },
@@ -189,17 +189,17 @@ describe('#extractFromFiles()', () => {
         },
         {
           key: 'key3',
-          loc: { start: { line: 5, column: 0 }, end: { line: 5, column: 12 } },
+          loc: { start: { line: 7, column: 0 }, end: { line: 7, column: 12 } },
           file: 'src/extractFromFilesFixture/LogoutView.ts',
         },
         {
           key: 'key1',
-          loc: { start: { line: 6, column: 0 }, end: { line: 6, column: 12 } },
+          loc: { start: { line: 8, column: 0 }, end: { line: 8, column: 12 } },
           file: 'src/extractFromFilesFixture/LogoutView.ts',
         },
       ],
       keys,
-      'should work when scanning typescript',
+      'should work when scanning typescript files',
     );
   });
 });
