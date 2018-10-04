@@ -172,7 +172,7 @@ describe('#extractFromFiles()', () => {
   it('should work when scanning typescript files', () => {
     const keys = extractFromFiles(
       ['src/extractFromFilesFixture/*.tsx', 'src/extractFromFilesFixture/*.ts'],
-      { useTypescript: true },
+      { useTypeScript: true },
     );
 
     assert.deepEqual(
