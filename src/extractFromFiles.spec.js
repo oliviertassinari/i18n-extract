@@ -202,4 +202,17 @@ describe('#extractFromFiles()', () => {
       'should work when scanning typescript files',
     );
   });
+
+  it('should throw a error when pass wrong value to parser params', () => {
+    assert.throws(
+      () =>
+        extractFromFiles(
+          ['src/extractFromFilesFixture/*.tsx', 'src/extractFromFilesFixture/*.ts'],
+          {
+            parser: 'babel',
+          },
+        ),
+      'Parser can be flow or typescript',
+    );
+  });
 });

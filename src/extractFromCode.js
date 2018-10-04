@@ -44,7 +44,7 @@ export default function extractFromCode(code, options = {}) {
 
   const availableParsers = ['flow', 'typescript'];
   if (!availableParsers.includes(parser)) {
-    throw new Error('Parser can be flow or typescript');
+    throw new Error('Parser must be either flow or typescript');
   }
 
   const ast = parse(code, {
