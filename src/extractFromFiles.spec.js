@@ -168,4 +168,38 @@ describe('#extractFromFiles()', () => {
       'Should work with an array as first parameter',
     );
   });
+
+  it('should work when scanning typescript', () => {
+    const keys = extractFromFiles(
+      ['src/extractFromFilesFixture/*.tsx', 'src/extractFromFilesFixture/*.ts'],
+      { useTypescript: true },
+    );
+
+    assert.deepEqual(
+      [
+        {
+          key: 'key3',
+          loc: { start: { line: 5, column: 0 }, end: { line: 5, column: 12 } },
+          file: 'src/extractFromFilesFixture/LoginView.tsx',
+        },
+        {
+          key: 'key1',
+          loc: { start: { line: 6, column: 0 }, end: { line: 6, column: 12 } },
+          file: 'src/extractFromFilesFixture/LoginView.tsx',
+        },
+        {
+          key: 'key3',
+          loc: { start: { line: 5, column: 0 }, end: { line: 5, column: 12 } },
+          file: 'src/extractFromFilesFixture/LogoutView.ts',
+        },
+        {
+          key: 'key1',
+          loc: { start: { line: 6, column: 0 }, end: { line: 6, column: 12 } },
+          file: 'src/extractFromFilesFixture/LogoutView.ts',
+        },
+      ],
+      keys,
+      'should work when scanning typescript',
+    );
+  });
 });
