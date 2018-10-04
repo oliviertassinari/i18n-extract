@@ -212,7 +212,7 @@ describe('#extractFromFiles()', () => {
             parser: 'babel',
           },
         ),
-      'Parser can be flow or typescript',
+      'Parser must be either flow or typescript',
     );
   });
 });
