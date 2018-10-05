@@ -172,7 +172,7 @@ describe('#extractFromFiles()', () => {
   it('should work when scanning typescript files', () => {
     const keys = extractFromFiles(
       ['src/extractFromFilesFixture/*.tsx', 'src/extractFromFilesFixture/*.ts'],
-      { useTypeScript: true },
+      { parser: 'typescript' },
     );
 
     assert.deepEqual(
@@ -200,6 +200,19 @@ describe('#extractFromFiles()', () => {
       ],
       keys,
       'should work when scanning typescript files',
+    );
+  });
+
+  it('should throw a error when pass wrong value to parser params', () => {
+    assert.throws(
+      () =>
+        extractFromFiles(
+          ['src/extractFromFilesFixture/*.tsx', 'src/extractFromFilesFixture/*.ts'],
+          {
+            parser: 'babel',
+          },
+        ),
+      'Parser must be either flow or typescript',
     );
   });
 });
