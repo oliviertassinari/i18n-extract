@@ -93,7 +93,7 @@ const keys = extractFromFiles([
 
 - `marker`: The name of the internationalized string marker function. Defaults to `i18n`.
 - `keyLoc`: An integer indicating the position of the key in the arguments. Defaults to `0`. Negative numbers, e.g., `-1`, indicate a position relative to the end of the argument list.
-- `parser`: Enum indicate the parser use, can be `typescript` or `flow`. Defaults to `flow`.`
+- `parser`: Enum indicate the parser to use, can be `typescript` or `flow`. Defaults to `flow`.`
 
 ### findMissing(locale, keysUsed)
 
