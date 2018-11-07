@@ -66,6 +66,7 @@ export default function extractFromCode(code, options = {}) {
       'functionBind',
       'functionSent',
       'dynamicImport',
+      'optionalChaining',
     ].concat([parser]),
   });
 
