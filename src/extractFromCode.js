@@ -1,4 +1,4 @@
-import { parse } from 'babylon';
+import { transformSync } from '@babel/core';
 import traverse from '@babel/traverse';
 
 const noInformationTypes = ['CallExpression', 'Identifier', 'MemberExpression'];
@@ -39,36 +39,64 @@ function getKeys(node) {
 const commentRegExp = /i18n-extract (.+)/;
 const commentIgnoreRegExp = /i18n-extract-disable-line/;
 
-export default function extractFromCode(code, options = {}) {
-  const { marker = 'i18n', keyLoc = 0, parser = 'flow' } = options;
+export const BASE_PARSER_OPTIONS = {
+  sourceType: 'module',
 
-  const availableParsers = ['flow', 'typescript'];
-  if (!availableParsers.includes(parser)) {
-    throw new Error('Parser must be either flow or typescript');
+  // Enable all the plugins
+  plugins: [
+    'jsx',
+    'asyncFunctions',
+    'classConstructorCall',
+    'doExpressions',
+    'trailingFunctionCommas',
+    'objectRestSpread',
+    'decorators',
+    'classProperties',
+    'exportExtensions',
+    'exponentiationOperator',
+    'asyncGenerators',
+    'functionBind',
+    'functionSent',
+    'dynamicImport',
+    'optionalChaining',
+  ],
+};
+export const FLOW_PARSER_OPTIONS = {
+  ...BASE_PARSER_OPTIONS,
+  plugins: BASE_PARSER_OPTIONS.plugins.concat(['flow']),
+};
+export const TYPESCRIPT_PARSER_OPTIONS = {
+  ...BASE_PARSER_OPTIONS,
+  plugins: BASE_PARSER_OPTIONS.plugins.concat(['typescript']),
+};
+
+function getBabelOptions(parser, babelOptions) {
+  if (babelOptions && parser) {
+    throw new Error("Can't specify both parser and Babel options!");
   }
 
-  const ast = parse(code, {
-    sourceType: 'module',
+  if (babelOptions) {
+    return babelOptions;
+  }
 
-    // Enable all the plugins
-    plugins: [
-      'jsx',
-      'asyncFunctions',
-      'classConstructorCall',
-      'doExpressions',
-      'trailingFunctionCommas',
-      'objectRestSpread',
-      'decorators',
-      'classProperties',
-      'exportExtensions',
-      'exponentiationOperator',
-      'asyncGenerators',
-      'functionBind',
-      'functionSent',
-      'dynamicImport',
-      'optionalChaining',
-    ].concat([parser]),
-  });
+  let parserOpts = FLOW_PARSER_OPTIONS;
+  if (parser) {
+    const availableParsers = ['flow', 'typescript'];
+    if (!availableParsers.includes(parser)) {
+      throw new Error('Parser must be either flow or typescript');
+    } else if (parser === 'flow') {
+      parserOpts = FLOW_PARSER_OPTIONS;
+    } else {
+      parserOpts = TYPESCRIPT_PARSER_OPTIONS;
+    }
+  }
+  return { ast: true, parserOpts };
+}
+
+export default function extractFromCode(code, options = {}) {
+  const { marker = 'i18n', keyLoc = 0, parser = null, babelOptions = null } = options;
+
+  const { ast } = transformSync(code, getBabelOptions(parser, babelOptions));
 
   const keys = [];
   const ignoredLines = [];
