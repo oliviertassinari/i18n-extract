@@ -94,6 +94,7 @@ const keys = extractFromFiles([
 - `marker`: The name of the internationalized string marker function. Defaults to `i18n`.
 - `keyLoc`: An integer indicating the position of the key in the arguments. Defaults to `0`. Negative numbers, e.g., `-1`, indicate a position relative to the end of the argument list.
 - `parser`: Enum indicate the parser to use, can be `typescript` or `flow`. Defaults to `flow`.
+- `babelOptions`: A Babel [configuration object](https://babeljs.io/docs/en/options) to allow applying custom transformations or plugins before scanning for i18n keys. Defaults to a config with all babylon plugins enabled.
 
 ### findMissing(locale, keysUsed)
 

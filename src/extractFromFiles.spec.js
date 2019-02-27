@@ -215,4 +215,64 @@ describe('#extractFromFiles()', () => {
       'Parser must be either flow or typescript',
     );
   });
+
+  it('should work when passing a custom Babel config', () => {
+    const customBabelPlugin = babel => {
+      const { types: t } = babel;
+      return {
+        visitor: {
+          CallExpression(path) {
+            const callee = path.node.callee;
+            if (callee.name === 'someCrazyThingThatRequiresABabelTransform') {
+              const properties = path.node.arguments[0].properties;
+              const fooProperty = properties.find(node => node.key.name === 'foo');
+              const i18nKey = fooProperty.value.value;
+              path.node.callee.name = 'i18n';
+              path.node.arguments = [t.StringLiteral(i18nKey)];
+            }
+          },
+        },
+      };
+    };
+
+    const keys = extractFromFiles(['src/extractFromFilesFixture/CustomTransform.js'], {
+      babelOptions: {
+        sourceType: 'module',
+        ast: true,
+        plugins: [customBabelPlugin],
+      },
+    });
+
+    assert.deepEqual(
+      [
+        {
+          file: 'src/extractFromFilesFixture/CustomTransform.js',
+          key: 'key1',
+          loc: {
+            end: {
+              column: 2,
+              line: 9,
+            },
+            start: {
+              column: 0,
+              line: 7,
+            },
+          },
+        },
+      ],
+      keys,
+      'should work when scanning files with a custom Babel config',
+    );
+  });
+
+  it('should throw an error when given both parser and babelOptions', () => {
+    assert.throws(
+      () =>
+        extractFromFiles(['src/extractFromFilesFixture/*.js'], {
+          parser: 'flow',
+          babelOptions: {},
+        }),
+      "Can't specify both parser and Babel options!",
+    );
+  });
 });
