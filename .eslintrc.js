@@ -21,6 +21,7 @@ module.exports = {
     'linebreak-style': 'off', // Don't play nicely with Windows.
     'arrow-body-style': 'off', // Not our taste?
     'arrow-parens': 'off', // Incompatible with prettier
+    'implicit-arrow-linebreak': 'off', // Incompatible with prettier
     'object-curly-newline': 'off', // Incompatible with prettier
     'function-paren-newline': 'off', // Incompatible with prettier
     indent: 'off', // Incompatible with prettier

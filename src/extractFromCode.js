@@ -6,18 +6,22 @@ const noInformationTypes = ['CallExpression', 'Identifier', 'MemberExpression'];
 function getKeys(node) {
   if (node.type === 'StringLiteral') {
     return [node.value];
-  } else if (node.type === 'BinaryExpression' && node.operator === '+') {
+  }
+  if (node.type === 'BinaryExpression' && node.operator === '+') {
     const left = getKeys(node.left);
     const right = getKeys(node.right);
     if (left.length > 1 || right.length > 1) {
       console.warn('Unsupported multiple keys for binary expression, keys skipped.'); // TODO
     }
     return [left[0] + right[0]];
-  } else if (node.type === 'TemplateLiteral') {
+  }
+  if (node.type === 'TemplateLiteral') {
     return [node.quasis.map(quasi => quasi.value.cooked).join('*')];
-  } else if (node.type === 'ConditionalExpression') {
+  }
+  if (node.type === 'ConditionalExpression') {
     return [...getKeys(node.consequent), ...getKeys(node.alternate)];
-  } else if (node.type === 'LogicalExpression') {
+  }
+  if (node.type === 'LogicalExpression') {
     switch (node.operator) {
       case '&&':
         return [...getKeys(node.right)];
@@ -27,7 +31,8 @@ function getKeys(node) {
         console.warn(`unsupported logicalExpression's operator: ${node.operator}`);
         return [null];
     }
-  } else if (noInformationTypes.includes(node.type)) {
+  }
+  if (noInformationTypes.includes(node.type)) {
     return ['*']; // We can't extract anything.
   }
 
@@ -50,7 +55,7 @@ export const BASE_PARSER_OPTIONS = {
     'doExpressions',
     'trailingFunctionCommas',
     'objectRestSpread',
-    'decorators',
+    'decoratorsLegacy',
     'classProperties',
     'exportExtensions',
     'exponentiationOperator',
