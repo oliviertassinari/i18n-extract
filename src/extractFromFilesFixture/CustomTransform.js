@@ -5,5 +5,5 @@
  * transform to rewrite it as `i18n('key1')`, it will!
  */
 someCrazyThingThatRequiresABabelTransform({
-  foo: 'key1'
+  foo: 'key1',
 });

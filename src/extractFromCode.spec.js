@@ -774,7 +774,7 @@ describe('#extractFromCode()', () => {
             key: 'bar',
             loc: {
               end: {
-                column: 27,
+                column: 29,
                 line: 14,
               },
               start: {
@@ -787,7 +787,7 @@ describe('#extractFromCode()', () => {
             key: 'baz',
             loc: {
               end: {
-                column: 27,
+                column: 29,
                 line: 14,
               },
               start: {

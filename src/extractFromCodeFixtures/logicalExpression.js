@@ -11,4 +11,4 @@ i18n(foo && 'bar');
 i18n(foo || 'baz');
 
 // mixed
-i18n('bar' || foo && 'baz');
+i18n('bar' || (foo && 'baz'));
