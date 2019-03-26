@@ -1,6 +1,6 @@
 {
   "name": "i18n-extract",
-  "version": "0.6.4",
+  "version": "0.6.5",
   "description": "Manage localization of ES6 code with static analysis",
   "main": "lib/index.js",
   "scripts": {
@@ -28,6 +28,7 @@
   "license": "MIT",
   "dependencies": {
     "@babel/core": "^7.4.0",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
     "@babel/plugin-proposal-decorators": "^7.4.0",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/register": "^7.4.0",
