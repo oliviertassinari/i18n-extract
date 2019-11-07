@@ -128,9 +128,11 @@ export default function extractFromCode(code, options = {}) {
     CallExpression(path) {
       const { node } = path;
 
-      if (ignoredLines.includes(node.loc.end.line)) {
-        // Skip ignored lines
-        return;
+      if (node.loc) {
+        if (ignoredLines.includes(node.loc.end.line)) {
+          // Skip ignored lines
+          return;
+        }
       }
 
       const {
