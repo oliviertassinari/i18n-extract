@@ -802,4 +802,52 @@ describe('#extractFromCode()', () => {
       );
     });
   });
+
+  describe('ast parsing', () => {
+    // See: https://github.com/oliviertassinari/i18n-extract/pull/62
+    it('can handle nodes with a null loc attribute (SourceLocation)', () => {
+      /**
+       * This plugin will mutate the ast to add a new node.
+       * The node created won't have an 'loc' (SourceLocation) attribute.
+       *
+       * According to https://github.com/babel/babel/blob/master/packages/babel-parser/ast/spec.md#node-objects,
+       * that's fine, and we should be able to handle this.
+       */
+      function dynamicallyAddTranslation(babel) {
+        const { types: t } = babel;
+        return {
+          visitor: {
+            ImportDeclaration(p) {
+              p.insertAfter(t.callExpression(t.identifier('__'), [t.stringLiteral('foo')]));
+            },
+          },
+        };
+      }
+
+      const keys = extractFromCode(getCode('marker.js'), {
+        marker: '__',
+        babelOptions: { ast: true, plugins: [dynamicallyAddTranslation] },
+      });
+
+      assert.deepEqual(
+        [
+          {
+            key: 'this_is_a_custom_marker',
+            loc: {
+              end: {
+                column: 56,
+                line: 5,
+              },
+              start: {
+                column: 0,
+                line: 5,
+              },
+            },
+          },
+        ],
+        keys,
+        'Should take into account the marker option.',
+      );
+    });
+  });
 });
