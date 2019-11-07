@@ -832,6 +832,10 @@ describe('#extractFromCode()', () => {
       assert.deepEqual(
         [
           {
+            key: 'foo',
+            loc: undefined,
+          },
+          {
             key: 'this_is_a_custom_marker',
             loc: {
               end: {
