@@ -135,6 +135,11 @@ export default function extractFromCode(code, options = {}) {
         }
       }
 
+      // Skip node with empty arguments
+      if (!node.arguments.length) {
+        return;
+      }
+
       const {
         callee: { name, type },
       } = node;
