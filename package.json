@@ -24,7 +24,10 @@
     "static analysis"
   ],
   "homepage": "https://github.com/oliviertassinari/i18n-extract",
-  "author": "Olivier Tassinari <olivier.tassinari@gmail.com> (https://github.com/oliviertassinari)",
+  "author": {
+    "name": "Olivier Tassinari",
+    "url": "https://github.com/oliviertassinari"
+  },
   "license": "MIT",
   "dependencies": {
     "@babel/core": "^7.4.0",
